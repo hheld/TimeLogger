@@ -138,7 +138,7 @@ Qt::ItemFlags ProjectModel::flags(const QModelIndex &index) const
         return Qt::NoItemFlags;
     }
 
-    return Qt::ItemIsEnabled | Qt::ItemIsEditable;
+    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
 }
 
 bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -150,6 +150,28 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
 
     Project *currentProject = static_cast<Project*>(index.internalPointer());
     currentProject->Name(value.toString());
+
+    emit(dataChanged(index, index));
+
+    return true;
+}
+
+bool ProjectModel::insertRow(int row, const QModelIndex &parent)
+{
+    if(!parent.isValid())
+    {
+        return false;
+    }
+
+    beginInsertRows(parent, row, 1);
+
+    Project *parentProject = static_cast<Project*>(parent.internalPointer());
+
+    Project *newProject = new Project(tr("Enter project title here"), parentProject);
+
+    AddProject(newProject, parentProject);
+
+    endInsertRows();
 
     return true;
 }
