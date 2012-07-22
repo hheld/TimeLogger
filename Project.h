@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QVariant>
 
 class Project
 {
@@ -14,6 +15,14 @@ public:
 
     Project* Parent() const;
     void Parent(Project* const parent);
+
+    QVariant col(int column) const;
+
+    Project* SubProject(int row) const;
+
+    int NumOfSubprojects() const;
+
+    void AddSubProject(Project *subProject);
 
 private:
     QString name;

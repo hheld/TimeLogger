@@ -25,3 +25,37 @@ void Project::Parent(Project *const parent)
 {
     this->parent = parent;
 }
+
+QVariant Project::col(int column) const
+{
+    Q_ASSERT(column < 1);
+
+    switch(column)
+    {
+    case 0:
+        return name;
+        break;
+    default:
+        return QVariant();
+    }
+}
+
+Project *Project::SubProject(int row) const
+{
+    if(row < subProjects.size())
+    {
+        return subProjects[row];
+    }
+
+    return 0;
+}
+
+int Project::NumOfSubprojects() const
+{
+    return subProjects.size();
+}
+
+void Project::AddSubProject(Project *subProject)
+{
+    subProjects.append(subProject);
+}
