@@ -24,10 +24,19 @@ public:
 
     void AddSubProject(Project *subProject);
 
+    double TotalHours() const;
+    void TotalHours(const double &hours);
+
+    double PlannedHours() const;
+    void PlannedHours(const double &hours);
+
 private:
     QString name;
     QVector<Project*> subProjects;
     Project *parent;
+
+    double totalBudgetHours;
+    double myPlannedHours;
 };
 
 #endif // PROJECT_H

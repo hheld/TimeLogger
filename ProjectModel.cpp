@@ -94,7 +94,7 @@ int ProjectModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
 
-    return 1;
+    return 3;
 }
 
 QVariant ProjectModel::data(const QModelIndex &index, int role) const
@@ -104,7 +104,26 @@ QVariant ProjectModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    return static_cast<Project*>(index.internalPointer())->Name();
+    QVariant actualData;
+
+    Project *currentProject = static_cast<Project*>(index.internalPointer());
+
+    switch(index.column())
+    {
+    case 0:
+        actualData = currentProject->Name();
+        break;
+    case 1:
+        actualData = currentProject->TotalHours();
+        break;
+    case 2:
+        actualData = currentProject->PlannedHours();
+        break;
+    default:
+        break;
+    }
+
+    return actualData;
 }
 
 QVariant ProjectModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -118,6 +137,12 @@ QVariant ProjectModel::headerData(int section, Qt::Orientation orientation, int 
     {
     case 0:
         return tr("Project");
+        break;
+    case 1:
+        return tr("Total hours");
+        break;
+    case 2:
+        return tr("Planned for me");
         break;
     default:
         return QVariant();
@@ -142,7 +167,19 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
     }
 
     Project *currentProject = static_cast<Project*>(index.internalPointer());
-    currentProject->Name(value.toString());
+
+    switch(index.column())
+    {
+    case 0:
+        currentProject->Name(value.toString());
+        break;
+    case 1:
+        currentProject->TotalHours(value.toDouble());
+        break;
+    case 2:
+        currentProject->PlannedHours(value.toDouble());
+        break;
+    }
 
     emit(dataChanged(index, index));
 

@@ -2,7 +2,9 @@
 
 Project::Project(const QString &name, Project *parent) :
     name(name),
-    parent(parent)
+    parent(parent),
+    totalBudgetHours(0.),
+    myPlannedHours(0.)
 {
 }
 
@@ -35,6 +37,11 @@ QVariant Project::col(int column) const
     case 0:
         return name;
         break;
+    case 1:
+        return totalBudgetHours;
+        break;
+    case 2:
+        return myPlannedHours;
     default:
         return QVariant();
     }
@@ -63,4 +70,24 @@ int Project::NumOfSubprojects() const
 void Project::AddSubProject(Project *subProject)
 {
     subProjects.append(subProject);
+}
+
+double Project::TotalHours() const
+{
+    return totalBudgetHours;
+}
+
+void Project::TotalHours(const double &hours)
+{
+    totalBudgetHours = hours;
+}
+
+double Project::PlannedHours() const
+{
+    return myPlannedHours;
+}
+
+void Project::PlannedHours(const double &hours)
+{
+    myPlannedHours = hours;
 }

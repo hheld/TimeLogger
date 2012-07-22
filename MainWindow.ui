@@ -21,7 +21,7 @@
        <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
       </property>
       <property name="alternatingRowColors">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="autoExpandDelay">
        <number>-1</number>
