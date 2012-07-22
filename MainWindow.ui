@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" rowspan="2">
-     <widget class="QTreeView" name="treeView_projects">
+     <widget class="ProjectTreeView" name="treeView_projects">
       <property name="alternatingRowColors">
        <bool>false</bool>
       </property>
@@ -65,6 +65,13 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ProjectTreeView</class>
+   <extends>QTreeView</extends>
+   <header>ProjectTreeView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

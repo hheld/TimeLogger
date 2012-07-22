@@ -87,14 +87,7 @@ int ProjectModel::rowCount(const QModelIndex &parent) const
         parentProject = static_cast<Project*>(parent.internalPointer());
     }
 
-    if(parentProject == root)
-    {
-        return projects->size();
-    }
-    else
-    {
-        return parentProject->NumOfSubprojects();
-    }
+    return parentProject->NumOfSubprojects();
 }
 
 int ProjectModel::columnCount(const QModelIndex &parent) const
@@ -158,14 +151,20 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 bool ProjectModel::insertRow(int row, const QModelIndex &parent)
 {
+    Project *parentProject;
+
     if(!parent.isValid())
     {
-        return false;
+        beginInsertRows(index(row, 0), row, 1);
+
+        parentProject = root;
     }
+    else
+    {
+        beginInsertRows(parent, row, 1);
 
-    beginInsertRows(parent, row, 1);
-
-    Project *parentProject = static_cast<Project*>(parent.internalPointer());
+        parentProject = static_cast<Project*>(parent.internalPointer());
+    }
 
     Project *newProject = new Project(tr("Enter project title here"), parentProject);
 

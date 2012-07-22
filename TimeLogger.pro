@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         MainWindow.cpp \
     Project.cpp \
-    ProjectModel.cpp
+    ProjectModel.cpp \
+    ProjectTreeView.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
-    ProjectModel.h
+    ProjectModel.h \
+    ProjectTreeView.h
 
 FORMS    += MainWindow.ui

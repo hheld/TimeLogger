@@ -42,6 +42,11 @@ QVariant Project::col(int column) const
 
 Project *Project::SubProject(int row) const
 {
+    if(row<0)
+    {
+        return 0;
+    }
+
     if(row < subProjects.size())
     {
         return subProjects[row];
