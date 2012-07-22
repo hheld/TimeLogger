@@ -155,13 +155,13 @@ bool ProjectModel::insertRow(int row, const QModelIndex &parent)
 
     if(!parent.isValid())
     {
-        beginInsertRows(index(row, 0), row, 1);
+        beginInsertRows(index(row, 0), row, row+1);
 
         parentProject = root;
     }
     else
     {
-        beginInsertRows(parent, row, 1);
+        beginInsertRows(parent, row, row+1);
 
         parentProject = static_cast<Project*>(parent.internalPointer());
     }

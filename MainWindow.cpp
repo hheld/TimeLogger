@@ -15,8 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     projectModel = new ProjectModel(&projects);
     ui->treeView_projects->setModel(projectModel);
 
-    connect(projectModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), ui->treeView_projects, SLOT(update()));
-
     initTestProjects();
 }
 
@@ -52,4 +50,5 @@ void MainWindow::on_toolButton_addProject_clicked()
     ui->treeView_projects->setExpanded(index, true);
     ui->treeView_projects->setCurrentIndex(indexOfNewProject);
     ui->treeView_projects->edit(indexOfNewProject);
+    ui->treeView_projects->expand(indexOfNewProject);
 }
