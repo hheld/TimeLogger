@@ -8,6 +8,13 @@ Project::Project(const QString &name, Project *parent) :
 {
 }
 
+Project::~Project()
+{
+    qDeleteAll(subProjects);
+
+    subProjects.clear();
+}
+
 const QString &Project::Name() const
 {
     return name;
@@ -49,12 +56,7 @@ QVariant Project::col(int column) const
 
 Project *Project::SubProject(int row) const
 {
-    if(row<0)
-    {
-        return 0;
-    }
-
-    if(row < subProjects.size())
+    if(row>=0 && row < subProjects.size())
     {
         return subProjects[row];
     }
@@ -70,6 +72,11 @@ int Project::NumOfSubprojects() const
 void Project::AddSubProject(Project *subProject)
 {
     subProjects.append(subProject);
+}
+
+void Project::RemoveSubProject(Project *subProject)
+{
+    subProjects.remove(subProjects.indexOf(subProject));
 }
 
 double Project::TotalHours() const

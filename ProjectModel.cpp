@@ -3,9 +3,8 @@
 
 #include <QDebug>
 
-ProjectModel::ProjectModel(QVector<Project *> *projects, QObject *parent) :
+ProjectModel::ProjectModel(QObject *parent) :
     QAbstractItemModel(parent),
-    projects(projects),
     root(new Project("root"))
 {
 }
@@ -22,8 +21,17 @@ void ProjectModel::AddProject(Project *p, Project *parent)
         p->Parent(root);
     }
 
-    projects->append(p);
     p->Parent()->AddSubProject(p);
+}
+
+void ProjectModel::RemoveProject(Project *p)
+{
+    if(p==root || p==0)
+    {
+        return;
+    }
+
+    delete p;
 }
 
 QModelIndex ProjectModel::index(int row, int column, const QModelIndex &parent) const
@@ -71,7 +79,7 @@ QModelIndex ProjectModel::parent(const QModelIndex &child) const
         return QModelIndex();
     }
 
-    return createIndex(projects->indexOf(parentProject), 0, parentProject);
+    return createIndex(child.row(), 0, parentProject);
 }
 
 int ProjectModel::rowCount(const QModelIndex &parent) const
@@ -190,16 +198,14 @@ bool ProjectModel::insertRow(int row, const QModelIndex &parent)
 {
     Project *parentProject;
 
+    beginInsertRows(parent, row, row);
+
     if(!parent.isValid())
     {
-        beginInsertRows(index(row, 0), row, row+1);
-
         parentProject = root;
     }
     else
     {
-        beginInsertRows(parent, row, row+1);
-
         parentProject = static_cast<Project*>(parent.internalPointer());
     }
 
@@ -208,6 +214,28 @@ bool ProjectModel::insertRow(int row, const QModelIndex &parent)
     AddProject(newProject, parentProject);
 
     endInsertRows();
+
+    return true;
+}
+
+bool ProjectModel::removeRow(int row, const QModelIndex &parent)
+{
+    Project *p;
+
+    beginRemoveRows(parent, row, row);
+
+    if(!parent.isValid())
+    {
+        p = root;
+    }
+    else
+    {
+        p = static_cast<Project*>(parent.internalPointer());
+    }
+
+    RemoveProject(p->SubProject(row));
+
+    endRemoveRows();
 
     return true;
 }

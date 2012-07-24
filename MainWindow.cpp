@@ -12,29 +12,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    projectModel = new ProjectModel(&projects);
+    projectModel = new ProjectModel();
     ui->treeView_projects->setModel(projectModel);
-
-    initTestProjects();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 
-    qDeleteAll(projects);
-    projects.clear();
-
     delete projectModel;
-}
-
-void MainWindow::initTestProjects()
-{
-    projectModel->AddProject(new Project("P1"));
-    projectModel->AddProject(new Project("P2"));
-    projectModel->AddProject(new Project("P3"));
-    projectModel->AddProject(new Project("Child of P1", projects[0]));
-    projectModel->AddProject(new Project("Child of child of P1", projects[3]));
 }
 
 void MainWindow::on_toolButton_addProject_clicked()
@@ -51,4 +37,11 @@ void MainWindow::on_toolButton_addProject_clicked()
     ui->treeView_projects->setCurrentIndex(indexOfNewProject);
     ui->treeView_projects->edit(indexOfNewProject);
     ui->treeView_projects->expand(indexOfNewProject);
+}
+
+void MainWindow::on_toolButton_removeProject_clicked()
+{
+    QModelIndex index = ui->treeView_projects->currentIndex();
+
+    projectModel->removeRow(index.row(), index.parent());
 }

@@ -9,6 +9,7 @@ class Project
 {
 public:
     explicit Project(const QString &name, Project *parent = 0);
+    ~Project();
 
     const QString& Name() const;
     void Name(const QString &name);
@@ -23,6 +24,7 @@ public:
     int NumOfSubprojects() const;
 
     void AddSubProject(Project *subProject);
+    void RemoveSubProject(Project *subProject);
 
     double TotalHours() const;
     void TotalHours(const double &hours);

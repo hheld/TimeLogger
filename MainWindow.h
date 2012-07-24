@@ -23,13 +23,12 @@ public:
 private slots:
     void on_toolButton_addProject_clicked();
 
+    void on_toolButton_removeProject_clicked();
+
 private:
     Ui::MainWindow *ui;
 
-    QVector<Project*> projects;
     ProjectModel *projectModel;
-
-    void initTestProjects();
 };
 
 #endif // MAINWINDOW_H
