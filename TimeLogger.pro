@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         MainWindow.cpp \
     Project.cpp \
     ProjectModel.cpp \
-    ProjectTreeView.cpp
+    ProjectTreeView.cpp \
+    XMLProjectsWriter.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
     ProjectModel.h \
-    ProjectTreeView.h
+    ProjectTreeView.h \
+    XMLProjectsWriter.h
 
 FORMS    += MainWindow.ui

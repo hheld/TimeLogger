@@ -15,6 +15,7 @@ public:
 
     Project* AddProject(const QString &name, Project *parent = 0);
     Project* GetProject(const QModelIndex &index) const;
+    Project *Root() const;
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &child) const;

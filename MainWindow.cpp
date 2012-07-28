@@ -5,6 +5,7 @@
 
 #include "Project.h"
 #include "ProjectModel.h"
+#include "XMLProjectsWriter.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -44,4 +45,11 @@ void MainWindow::on_toolButton_removeProject_clicked()
     QModelIndex index = ui->treeView_projects->currentIndex();
 
     projectModel->removeRow(index.row(), index.parent());
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    XMLProjectsWriter projectsWriter("../projects.xml");
+    projectsWriter.SetRoot(projectModel->Root());
+    projectsWriter.Write();
 }

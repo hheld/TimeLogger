@@ -33,6 +33,8 @@ public:
     double PlannedHours() const;
     void PlannedHours(const double &hours);
 
+    const QVector<Project*>& AllSubprojects() const;
+
 private:
     QString name;
     QVector<Project*> subProjects;

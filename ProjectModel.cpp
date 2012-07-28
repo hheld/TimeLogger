@@ -49,6 +49,11 @@ Project *ProjectModel::GetProject(const QModelIndex &index) const
     return root;
 }
 
+Project *ProjectModel::Root() const
+{
+    return root;
+}
+
 void ProjectModel::AddProject(Project *p)
 {
     p->Parent()->AddSubProject(p);

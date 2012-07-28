@@ -109,3 +109,8 @@ void Project::PlannedHours(const double &hours)
 {
     myPlannedHours = hours;
 }
+
+const QVector<Project *> &Project::AllSubprojects() const
+{
+    return subProjects;
+}
