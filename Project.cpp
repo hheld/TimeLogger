@@ -81,6 +81,7 @@ int Project::SubprojectNumber() const
 
 void Project::AddSubProject(Project *subProject)
 {
+    subProject->Parent(this);
     subProjects.append(subProject);
 }
 

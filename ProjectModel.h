@@ -13,6 +13,7 @@ public:
     explicit ProjectModel(QObject *parent = 0);
     ~ProjectModel();
 
+    Project* AddProject(const QString &name, Project *parent = 0);
     Project* GetProject(const QModelIndex &index) const;
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
