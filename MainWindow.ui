@@ -70,6 +70,9 @@
       <property name="rootIsDecorated">
        <bool>true</bool>
       </property>
+      <property name="uniformRowHeights">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>
@@ -91,6 +94,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -100,6 +104,14 @@
    </property>
    <property name="toolTip">
     <string>Save projects to XML file</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Load projects from XML file</string>
    </property>
   </action>
  </widget>

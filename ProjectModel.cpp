@@ -7,12 +7,12 @@ ProjectModel::ProjectModel(QObject *parent) :
     QAbstractItemModel(parent),
     root(new Project("root"))
 {
-    Project *P1 = AddProject("P1");
-    Project *P2 = AddProject("P2");
-    Project *P3 = AddProject("P3");
-    Project *P4 = AddProject("P4", P1);
-    Project *P5 = AddProject("P5", P2);
-    Project *P6 = AddProject("P6", P5);
+//    Project *P1 = AddProject("P1");
+//    Project *P2 = AddProject("P2");
+//    Project *P3 = AddProject("P3");
+//    Project *P4 = AddProject("P4", P1);
+//    Project *P5 = AddProject("P5", P2);
+//    Project *P6 = AddProject("P6", P5);
 }
 
 ProjectModel::~ProjectModel()

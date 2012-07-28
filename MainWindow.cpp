@@ -6,6 +6,7 @@
 #include "Project.h"
 #include "ProjectModel.h"
 #include "XMLProjectsWriter.h"
+#include "XMLProjectsReader.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -52,4 +53,13 @@ void MainWindow::on_actionSave_triggered()
     XMLProjectsWriter projectsWriter("../projects.xml");
     projectsWriter.SetRoot(projectModel->Root());
     projectsWriter.Write();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    XMLProjectsReader projectsReader("../projects.xml");
+    projectsReader.SetRoot(projectModel->Root());
+    projectsReader.Read();
+
+    ui->treeView_projects->expandAll();
 }
