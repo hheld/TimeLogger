@@ -13,6 +13,8 @@ public:
     explicit ProjectModel(QObject *parent = 0);
     ~ProjectModel();
 
+    Project* GetProject(const QModelIndex &index) const;
+
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &child) const;
     int rowCount(const QModelIndex &parent) const;
@@ -31,7 +33,7 @@ public slots:
 private:
     Project *root;
 
-    void AddProject(Project *p, Project *parent = 0);
+    void AddProject(Project *p);
     void RemoveProject(Project *p);
 };
 

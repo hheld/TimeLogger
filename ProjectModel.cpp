@@ -14,13 +14,23 @@ ProjectModel::~ProjectModel()
     delete root;
 }
 
-void ProjectModel::AddProject(Project *p, Project *parent)
+Project *ProjectModel::GetProject(const QModelIndex &index) const
 {
-    if(parent==0 && p->Parent()==0)
+    if(index.isValid())
     {
-        p->Parent(root);
+        Project *p = static_cast<Project*>(index.internalPointer());
+
+        if(p)
+        {
+            return p;
+        }
     }
 
+    return root;
+}
+
+void ProjectModel::AddProject(Project *p)
+{
     p->Parent()->AddSubProject(p);
 }
 
@@ -41,17 +51,7 @@ QModelIndex ProjectModel::index(int row, int column, const QModelIndex &parent) 
         return QModelIndex();
     }
 
-    Project *parentProject;
-
-    if(!parent.isValid())
-    {
-        parentProject = root;
-    }
-    else
-    {
-        parentProject = static_cast<Project*>(parent.internalPointer());
-    }
-
+    Project *parentProject = GetProject(parent);
     Project *childProject = parentProject->SubProject(row);
 
     if(childProject)
@@ -71,7 +71,8 @@ QModelIndex ProjectModel::parent(const QModelIndex &child) const
         return QModelIndex();
     }
 
-    Project *childProject = static_cast<Project*>(child.internalPointer());
+    Project *childProject = GetProject(child);
+
     Project *parentProject = childProject->Parent();
 
     if(parentProject == root)
@@ -84,16 +85,7 @@ QModelIndex ProjectModel::parent(const QModelIndex &child) const
 
 int ProjectModel::rowCount(const QModelIndex &parent) const
 {
-    Project *parentProject;
-
-    if(!parent.isValid())
-    {
-        parentProject = root;
-    }
-    else
-    {
-        parentProject = static_cast<Project*>(parent.internalPointer());
-    }
+    Project *parentProject = GetProject(parent);
 
     return parentProject->NumOfSubprojects();
 }
@@ -114,7 +106,7 @@ QVariant ProjectModel::data(const QModelIndex &index, int role) const
 
     QVariant actualData;
 
-    Project *currentProject = static_cast<Project*>(index.internalPointer());
+    Project *currentProject = GetProject(index);
 
     switch(index.column())
     {
@@ -174,7 +166,7 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
         return false;
     }
 
-    Project *currentProject = static_cast<Project*>(index.internalPointer());
+    Project *currentProject = GetProject(index);
 
     switch(index.column())
     {
@@ -196,22 +188,13 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 bool ProjectModel::insertRow(int row, const QModelIndex &parent)
 {
-    Project *parentProject;
+    Project *parentProject = GetProject(parent);
 
     beginInsertRows(parent, row, row);
 
-    if(!parent.isValid())
-    {
-        parentProject = root;
-    }
-    else
-    {
-        parentProject = static_cast<Project*>(parent.internalPointer());
-    }
-
     Project *newProject = new Project(tr("Enter project title here"), parentProject);
 
-    AddProject(newProject, parentProject);
+    AddProject(newProject);
 
     endInsertRows();
 
@@ -220,20 +203,14 @@ bool ProjectModel::insertRow(int row, const QModelIndex &parent)
 
 bool ProjectModel::removeRow(int row, const QModelIndex &parent)
 {
-    Project *p;
+    Project *p = GetProject(parent);
 
     beginRemoveRows(parent, row, row);
 
-    if(!parent.isValid())
-    {
-        p = root;
-    }
-    else
-    {
-        p = static_cast<Project*>(parent.internalPointer());
-    }
+    Project *projectToBeRemoved = p->SubProject(row);
 
-    RemoveProject(p->SubProject(row));
+    p->RemoveSubProject(projectToBeRemoved);
+    RemoveProject(projectToBeRemoved);
 
     endRemoveRows();
 
