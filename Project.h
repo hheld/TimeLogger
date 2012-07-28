@@ -22,6 +22,7 @@ public:
     Project* SubProject(int row) const;
 
     int NumOfSubprojects() const;
+    int SubprojectNumber() const;
 
     void AddSubProject(Project *subProject);
     void RemoveSubProject(Project *subProject);

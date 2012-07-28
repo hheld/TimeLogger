@@ -51,6 +51,11 @@ QModelIndex ProjectModel::index(int row, int column, const QModelIndex &parent) 
         return QModelIndex();
     }
 
+    if(parent.isValid() && parent.column() != 0)
+    {
+        return QModelIndex();
+    }
+
     Project *parentProject = GetProject(parent);
     Project *childProject = parentProject->SubProject(row);
 
@@ -72,7 +77,6 @@ QModelIndex ProjectModel::parent(const QModelIndex &child) const
     }
 
     Project *childProject = GetProject(child);
-
     Project *parentProject = childProject->Parent();
 
     if(parentProject == root)
@@ -80,7 +84,7 @@ QModelIndex ProjectModel::parent(const QModelIndex &child) const
         return QModelIndex();
     }
 
-    return createIndex(child.row(), 0, parentProject);
+    return createIndex(parentProject->SubprojectNumber(), 0, parentProject);
 }
 
 int ProjectModel::rowCount(const QModelIndex &parent) const

@@ -69,6 +69,16 @@ int Project::NumOfSubprojects() const
     return subProjects.size();
 }
 
+int Project::SubprojectNumber() const
+{
+    if (parent)
+    {
+        return parent->subProjects.indexOf(const_cast<Project*>(this));
+    }
+
+    return 0;
+}
+
 void Project::AddSubProject(Project *subProject)
 {
     subProjects.append(subProject);
