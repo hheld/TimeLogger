@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     ProjectTreeView.cpp \
     XMLProjectsWriter.cpp \
     XMLProjectsReader.cpp \
-    LineEditDelegate.cpp
+    LineEditDelegate.cpp \
+    ProjectDatabase.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
@@ -27,6 +28,7 @@ HEADERS  += MainWindow.h \
     ProjectTreeView.h \
     XMLProjectsWriter.h \
     XMLProjectsReader.h \
-    LineEditDelegate.h
+    LineEditDelegate.h \
+    ProjectDatabase.h
 
 FORMS    += MainWindow.ui

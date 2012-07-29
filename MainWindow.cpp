@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include <QDir>
 #include <QDebug>
 
 #include "Project.h"
@@ -8,10 +9,13 @@
 #include "XMLProjectsWriter.h"
 #include "XMLProjectsReader.h"
 #include "LineEditDelegate.h"
+#include "ProjectDatabase.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    currentlySelectedProject(0),
+    pdb(0)
 {
     ui->setupUi(this);
 
@@ -26,6 +30,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->treeView_projects, SIGNAL(clicked(QModelIndex)), this, SLOT(updateLabelCurrentProject(QModelIndex)));
     connect(ui->treeView_projects, SIGNAL(clickedOutsideOfAnyRow()), this, SLOT(updateLabelCurrentProject()));
 
+    initSettingsFolder();
+
+    pdb = new ProjectDatabase();
+
     updateLabelCurrentProject();
 }
 
@@ -34,6 +42,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete projectModel;
     delete lineEditDelegate;
+    delete pdb;
 }
 
 void MainWindow::on_toolButton_addProject_clicked()
@@ -83,12 +92,41 @@ void MainWindow::updateLabelCurrentProject(const QModelIndex &index)
 
     if(p == projectModel->Root())
     {
+        if(currentlySelectedProject)
+        {
+            pdb->LogWorkingEnd(currentlySelectedProject, QDateTime::currentDateTime());
+        }
+
         currentProjectName = "None";
+        currentlySelectedProject = 0;
     }
     else
     {
+        if(currentlySelectedProject)
+        {
+            pdb->LogWorkingEnd(currentlySelectedProject, QDateTime::currentDateTime());
+        }
+
+        if(p)
+        {
+            pdb->LogWorkingStart(p, QDateTime::currentDateTime());
+        }
+
         currentProjectName = p->Name();
+        currentlySelectedProject = p;
     }
 
     ui->label_selectedProject->setText(currentProjectName);
+}
+
+void MainWindow::initSettingsFolder() const
+{
+    QString hiddenFolderName = QDir::homePath() + "/.timelogger";
+
+    QDir hiddenFolder(hiddenFolderName);
+
+    if(!hiddenFolder.exists())
+    {
+        hiddenFolder.mkdir(hiddenFolderName);
+    }
 }

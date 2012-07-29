@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
 #include <QVector>
 #include <QModelIndex>
 
@@ -13,6 +12,7 @@ class MainWindow;
 class Project;
 class ProjectModel;
 class LineEditDelegate;
+class ProjectDatabase;
 
 class MainWindow : public QMainWindow
 {
@@ -38,6 +38,12 @@ private:
 
     ProjectModel *projectModel;
     LineEditDelegate *lineEditDelegate;
+
+    Project *currentlySelectedProject;
+
+    ProjectDatabase *pdb;
+
+    void initSettingsFolder() const;
 };
 
 #endif // MAINWINDOW_H
