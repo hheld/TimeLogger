@@ -125,3 +125,40 @@ const QVector<Project *> &Project::AllSubprojects() const
 {
     return subProjects;
 }
+
+bool Project::CheckConsistency() const
+{
+    bool isConsistent = true;
+
+    if(parent)
+    {
+        // 1. planned hours always <= total hours
+        if(myPlannedHours > totalBudgetHours)
+        {
+            return false;
+        }
+
+        // 2. sum of subprojects' hours must be <= this project's hours
+        double sumTotalHoursSubprojects = 0.;
+        double sumPlannedHoursSubprojects = 0.;
+
+        foreach(Project *sp, subProjects)
+        {
+            sumTotalHoursSubprojects += sp->TotalHours();
+            sumPlannedHoursSubprojects += sp->PlannedHours();
+        }
+
+        if(sumTotalHoursSubprojects > totalBudgetHours || sumPlannedHoursSubprojects > myPlannedHours)
+        {
+            return false;
+        }
+    }
+
+    // check consistency recursively for all subprojects
+//    foreach(Project *sp, subProjects)
+//    {
+//        isConsistent = isConsistent && sp->CheckConsistency();
+//    }
+
+    return isConsistent;
+}

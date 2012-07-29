@@ -38,6 +38,8 @@ public:
 
     const QVector<Project*>& AllSubprojects() const;
 
+    bool CheckConsistency() const;
+
 private:
     QString name;
     QVector<Project*> subProjects;

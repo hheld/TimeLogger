@@ -1,6 +1,9 @@
 #include "LineEditDelegate.h"
+#include "ProjectModel.h"
+#include "Project.h"
 
 #include <QLineEdit>
+#include <QPainter>
 
 LineEditDelegate::LineEditDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -41,4 +44,26 @@ void LineEditDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionV
     Q_UNUSED(index);
 
     editor->setGeometry(option.rect);
+}
+
+void LineEditDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    int col = index.column();
+
+    const ProjectModel *model = static_cast<const ProjectModel*>(index.model());
+
+    Project *currentProject = model->GetProject(index);
+
+    bool projectIsConsistent = currentProject->CheckConsistency();
+
+    if(!projectIsConsistent && (col == 1 || col == 2))
+    {
+        painter->setPen(Qt::red);
+    }
+    else
+    {
+        painter->setPen(Qt::black);
+    }
+
+    painter->drawText(option.rect, Qt::AlignLeft | Qt::AlignVCenter, model->data(index).toString());
 }
