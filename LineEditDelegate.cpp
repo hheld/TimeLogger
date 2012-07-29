@@ -56,14 +56,12 @@ void LineEditDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     bool projectIsConsistent = currentProject->CheckConsistency();
 
+    QStyleOptionViewItemV4 newOption(option);
+
     if(!projectIsConsistent && (col == 1 || col == 2))
     {
-        painter->setPen(Qt::red);
-    }
-    else
-    {
-        painter->setPen(Qt::black);
+        newOption.palette.setColor(QPalette::Text, QColor(255, 0, 0));
     }
 
-    painter->drawText(option.rect, Qt::AlignLeft | Qt::AlignVCenter, model->data(index).toString());
+    QStyledItemDelegate::paint(painter, newOption, index);
 }
