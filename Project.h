@@ -33,6 +33,9 @@ public:
     double PlannedHours() const;
     void PlannedHours(const double &hours);
 
+    double WorkedHours() const;
+    void WorkedHours(const double &workedHours);
+
     const QVector<Project*>& AllSubprojects() const;
 
 private:
@@ -42,6 +45,7 @@ private:
 
     double totalBudgetHours;
     double myPlannedHours;
+    double workedHours;
 };
 
 #endif // PROJECT_H

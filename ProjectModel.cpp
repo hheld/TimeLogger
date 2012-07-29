@@ -7,12 +7,6 @@ ProjectModel::ProjectModel(QObject *parent) :
     QAbstractItemModel(parent),
     root(new Project("root"))
 {
-//    Project *P1 = AddProject("P1");
-//    Project *P2 = AddProject("P2");
-//    Project *P3 = AddProject("P3");
-//    Project *P4 = AddProject("P4", P1);
-//    Project *P5 = AddProject("P5", P2);
-//    Project *P6 = AddProject("P6", P5);
 }
 
 ProjectModel::~ProjectModel()
@@ -118,7 +112,7 @@ int ProjectModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
 
-    return 3;
+    return 4;
 }
 
 QVariant ProjectModel::data(const QModelIndex &index, int role) const
@@ -142,6 +136,9 @@ QVariant ProjectModel::data(const QModelIndex &index, int role) const
         break;
     case 2:
         actualData = currentProject->PlannedHours();
+        break;
+    case 3:
+        actualData = currentProject->WorkedHours();
         break;
     default:
         break;
@@ -167,6 +164,9 @@ QVariant ProjectModel::headerData(int section, Qt::Orientation orientation, int 
         break;
     case 2:
         return tr("Planned for me");
+        break;
+    case 3:
+        return tr("Worked hours");
         break;
     default:
         return QVariant();
@@ -202,6 +202,9 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
         break;
     case 2:
         currentProject->PlannedHours(value.toDouble());
+        break;
+    case 3:
+        currentProject->WorkedHours(value.toDouble());
         break;
     }
 

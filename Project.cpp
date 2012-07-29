@@ -4,7 +4,8 @@ Project::Project(const QString &name, Project *parent) :
     name(name),
     parent(parent),
     totalBudgetHours(0.),
-    myPlannedHours(0.)
+    myPlannedHours(0.),
+    workedHours(0.)
 {
 }
 
@@ -108,6 +109,16 @@ double Project::PlannedHours() const
 void Project::PlannedHours(const double &hours)
 {
     myPlannedHours = hours;
+}
+
+double Project::WorkedHours() const
+{
+    return workedHours;
+}
+
+void Project::WorkedHours(const double &workedHours)
+{
+    this->workedHours = workedHours;
 }
 
 const QVector<Project *> &Project::AllSubprojects() const
