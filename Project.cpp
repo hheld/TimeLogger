@@ -154,11 +154,5 @@ bool Project::CheckConsistency() const
         }
     }
 
-    // check consistency recursively for all subprojects
-//    foreach(Project *sp, subProjects)
-//    {
-//        isConsistent = isConsistent && sp->CheckConsistency();
-//    }
-
     return isConsistent;
 }
