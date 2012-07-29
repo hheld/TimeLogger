@@ -7,6 +7,7 @@
 #include "ProjectModel.h"
 #include "XMLProjectsWriter.h"
 #include "XMLProjectsReader.h"
+#include "LineEditDelegate.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,13 +17,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     projectModel = new ProjectModel();
     ui->treeView_projects->setModel(projectModel);
+
+    lineEditDelegate = new LineEditDelegate(this);
+    ui->treeView_projects->setItemDelegateForColumn(0, lineEditDelegate);
+    ui->treeView_projects->setItemDelegateForColumn(1, lineEditDelegate);
+    ui->treeView_projects->setItemDelegateForColumn(2, lineEditDelegate);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-
     delete projectModel;
+    delete lineEditDelegate;
 }
 
 void MainWindow::on_toolButton_addProject_clicked()

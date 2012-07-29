@@ -18,13 +18,15 @@ SOURCES += main.cpp\
     ProjectModel.cpp \
     ProjectTreeView.cpp \
     XMLProjectsWriter.cpp \
-    XMLProjectsReader.cpp
+    XMLProjectsReader.cpp \
+    LineEditDelegate.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
     ProjectModel.h \
     ProjectTreeView.h \
     XMLProjectsWriter.h \
-    XMLProjectsReader.h
+    XMLProjectsReader.h \
+    LineEditDelegate.h
 
 FORMS    += MainWindow.ui

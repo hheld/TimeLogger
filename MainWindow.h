@@ -11,6 +11,7 @@ class MainWindow;
 
 class Project;
 class ProjectModel;
+class LineEditDelegate;
 
 class MainWindow : public QMainWindow
 {
@@ -33,6 +34,7 @@ private:
     Ui::MainWindow *ui;
 
     ProjectModel *projectModel;
+    LineEditDelegate *lineEditDelegate;
 };
 
 #endif // MAINWINDOW_H
