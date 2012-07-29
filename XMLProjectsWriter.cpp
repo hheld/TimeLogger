@@ -68,6 +68,7 @@ void XMLProjectsWriter::WriteProject(Project *p) const
         xmlStreamWriter->writeAttribute("name", p->Name());
         xmlStreamWriter->writeAttribute("totalHours", QString::number(p->TotalHours()));
         xmlStreamWriter->writeAttribute("plannedHours", QString::number(p->PlannedHours()));
+        xmlStreamWriter->writeAttribute("workedHours", QString::number(p->WorkedHours()));
     }
 
     const QVector<Project*> &allSubprojects = p->AllSubprojects();
