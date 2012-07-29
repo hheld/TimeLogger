@@ -12,6 +12,7 @@ public:
     void mousePressEvent(QMouseEvent *event);
 
 signals:
+    void clickedOutsideOfAnyRow();
 
 public slots:
 

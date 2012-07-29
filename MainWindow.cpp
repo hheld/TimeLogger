@@ -22,6 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeView_projects->setItemDelegateForColumn(0, lineEditDelegate);
     ui->treeView_projects->setItemDelegateForColumn(1, lineEditDelegate);
     ui->treeView_projects->setItemDelegateForColumn(2, lineEditDelegate);
+
+    connect(ui->treeView_projects, SIGNAL(clicked(QModelIndex)), this, SLOT(updateLabelCurrentProject(QModelIndex)));
+    connect(ui->treeView_projects, SIGNAL(clickedOutsideOfAnyRow()), this, SLOT(updateLabelCurrentProject()));
+
+    updateLabelCurrentProject();
 }
 
 MainWindow::~MainWindow()
@@ -68,4 +73,22 @@ void MainWindow::on_actionOpen_triggered()
     projectsReader.Read();
 
     ui->treeView_projects->expandAll();
+}
+
+void MainWindow::updateLabelCurrentProject(const QModelIndex &index)
+{
+    Project *p = projectModel->GetProject(index);
+
+    QString currentProjectName;
+
+    if(p == projectModel->Root())
+    {
+        currentProjectName = "None";
+    }
+    else
+    {
+        currentProjectName = p->Name();
+    }
+
+    ui->label_selectedProject->setText(currentProjectName);
 }

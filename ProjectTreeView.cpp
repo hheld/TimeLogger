@@ -18,6 +18,8 @@ void ProjectTreeView::mousePressEvent(QMouseEvent *event)
     {
         clearSelection();
         setCurrentIndex(index);
+
+        emit clickedOutsideOfAnyRow();
     }
 
     QTreeView::mousePressEvent(event);

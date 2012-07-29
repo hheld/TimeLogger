@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <QVector>
+#include <QModelIndex>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,8 @@ private slots:
     void on_actionSave_triggered();
 
     void on_actionOpen_triggered();
+
+    void updateLabelCurrentProject(const QModelIndex &index = QModelIndex());
 
 private:
     Ui::MainWindow *ui;
