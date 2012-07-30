@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     currentlySelectedProject(0),
+    isCurrentlyWorking(false),
     pdb(0)
 {
     ui->setupUi(this);
@@ -35,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     pdb = new ProjectDatabase();
 
     updateLabelCurrentProject();
+
+    ui->toolButton_stopWorking->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -86,32 +89,22 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::updateLabelCurrentProject(const QModelIndex &index)
 {
+    if(isCurrentlyWorking)
+    {
+        return;
+    }
+
     Project *p = projectModel->GetProject(index);
 
     QString currentProjectName;
 
     if(p == projectModel->Root())
     {
-        if(currentlySelectedProject)
-        {
-            pdb->LogWorkingEnd(currentlySelectedProject, QDateTime::currentDateTime());
-        }
-
         currentProjectName = "None";
         currentlySelectedProject = 0;
     }
     else
     {
-        if(currentlySelectedProject)
-        {
-            pdb->LogWorkingEnd(currentlySelectedProject, QDateTime::currentDateTime());
-        }
-
-        if(p)
-        {
-            pdb->LogWorkingStart(p, QDateTime::currentDateTime());
-        }
-
         currentProjectName = p->Name();
         currentlySelectedProject = p;
     }
@@ -129,4 +122,36 @@ void MainWindow::initSettingsFolder() const
     {
         hiddenFolder.mkdir(hiddenFolderName);
     }
+}
+
+void MainWindow::on_toolButton_startWorking_clicked()
+{
+    if(currentlySelectedProject)
+    {
+        pdb->LogWorkingStart(currentlySelectedProject, QDateTime::currentDateTime());
+    }
+
+    isCurrentlyWorking = true;
+
+    ui->toolButton_startWorking->setEnabled(false);
+    ui->toolButton_stopWorking->setEnabled(true);
+
+    ui->statusBar->showMessage(tr("Currently working on project '%1'.").arg(currentlySelectedProject->Name()));
+}
+
+void MainWindow::on_toolButton_stopWorking_clicked()
+{
+    if(currentlySelectedProject)
+    {
+        pdb->LogWorkingEnd(currentlySelectedProject, QDateTime::currentDateTime());
+    }
+
+    isCurrentlyWorking = false;
+
+    ui->toolButton_startWorking->setEnabled(true);
+    ui->toolButton_stopWorking->setEnabled(false);
+
+    updateLabelCurrentProject(ui->treeView_projects->currentIndex());
+
+    ui->statusBar->clearMessage();
 }

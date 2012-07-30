@@ -33,6 +33,10 @@ private slots:
 
     void updateLabelCurrentProject(const QModelIndex &index = QModelIndex());
 
+    void on_toolButton_startWorking_clicked();
+
+    void on_toolButton_stopWorking_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -40,6 +44,7 @@ private:
     LineEditDelegate *lineEditDelegate;
 
     Project *currentlySelectedProject;
+    bool isCurrentlyWorking;
 
     ProjectDatabase *pdb;
 
