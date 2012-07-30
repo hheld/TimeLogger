@@ -22,6 +22,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void stoppedWorking();
+
 private slots:
     void on_toolButton_addProject_clicked();
 
@@ -37,12 +40,15 @@ private slots:
 
     void on_toolButton_stopWorking_clicked();
 
+    void addSecondToCurrentProject();
+
 private:
     Ui::MainWindow *ui;
 
     ProjectModel *projectModel;
     LineEditDelegate *lineEditDelegate;
 
+    QModelIndex currentProjectIndex;
     Project *currentlySelectedProject;
     bool isCurrentlyWorking;
 

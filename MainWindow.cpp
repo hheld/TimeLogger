@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 
 #include <QDir>
+#include <QTimer>
 #include <QDebug>
 
 #include "Project.h"
@@ -38,6 +39,11 @@ MainWindow::MainWindow(QWidget *parent) :
     updateLabelCurrentProject();
 
     ui->toolButton_stopWorking->setEnabled(false);
+
+    // automatically save project XML every 10 minutes
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_actionSave_triggered()));
+    timer->start(60*10*1000);
 }
 
 MainWindow::~MainWindow()
@@ -73,9 +79,12 @@ void MainWindow::on_toolButton_removeProject_clicked()
 
 void MainWindow::on_actionSave_triggered()
 {
-    XMLProjectsWriter projectsWriter("../projects.xml");
-    projectsWriter.SetRoot(projectModel->Root());
-    projectsWriter.Write();
+    if(projectModel->Root()->NumOfSubprojects() > 0)
+    {
+        XMLProjectsWriter projectsWriter("../projects.xml");
+        projectsWriter.SetRoot(projectModel->Root());
+        projectsWriter.Write();
+    }
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -107,6 +116,8 @@ void MainWindow::updateLabelCurrentProject(const QModelIndex &index)
     {
         currentProjectName = p->Name();
         currentlySelectedProject = p;
+
+        currentProjectIndex = index.sibling(index.row(), 3);
     }
 
     ui->label_selectedProject->setText(currentProjectName);
@@ -137,6 +148,11 @@ void MainWindow::on_toolButton_startWorking_clicked()
     ui->toolButton_stopWorking->setEnabled(true);
 
     ui->statusBar->showMessage(tr("Currently working on project '%1'.").arg(currentlySelectedProject->Name()));
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(addSecondToCurrentProject()));
+    connect(this, SIGNAL(stoppedWorking()), timer, SLOT(stop()));
+    timer->start(1000);
 }
 
 void MainWindow::on_toolButton_stopWorking_clicked()
@@ -154,4 +170,15 @@ void MainWindow::on_toolButton_stopWorking_clicked()
     updateLabelCurrentProject(ui->treeView_projects->currentIndex());
 
     ui->statusBar->clearMessage();
+
+    emit stoppedWorking();
+}
+
+void MainWindow::addSecondToCurrentProject()
+{
+    double alreadyWorkedHours = currentlySelectedProject->WorkedHours();
+
+    currentlySelectedProject->WorkedHours(alreadyWorkedHours + 1./3600.);
+
+    ui->treeView_projects->update(currentProjectIndex);
 }
