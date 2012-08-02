@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->treeView_projects, SIGNAL(clicked(QModelIndex)), this, SLOT(updateLabelCurrentProject(QModelIndex)));
     connect(ui->treeView_projects, SIGNAL(clickedOutsideOfAnyRow()), this, SLOT(updateLabelCurrentProject()));
+    connect(projectModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateLabelCurrentProject(QModelIndex)));
 
     initSettingsFolder();
 
@@ -44,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_actionSave_triggered()));
     timer->start(60*10*1000);
+
+    on_actionOpen_triggered();
 }
 
 MainWindow::~MainWindow()
@@ -64,10 +67,12 @@ void MainWindow::on_toolButton_addProject_clicked()
 
     QModelIndex indexOfNewProject = projectModel->index(row, 0, index);
 
-    ui->treeView_projects->setExpanded(index, true);
+    ui->treeView_projects->setExpanded(index, false);
+    ui->treeView_projects->expand(index);
     ui->treeView_projects->setCurrentIndex(indexOfNewProject);
     ui->treeView_projects->edit(indexOfNewProject);
-    ui->treeView_projects->expand(indexOfNewProject);
+
+    updateLabelCurrentProject(indexOfNewProject);
 }
 
 void MainWindow::on_toolButton_removeProject_clicked()
@@ -81,7 +86,7 @@ void MainWindow::on_actionSave_triggered()
 {
     if(projectModel->Root()->NumOfSubprojects() > 0)
     {
-        XMLProjectsWriter projectsWriter("../projects.xml");
+        XMLProjectsWriter projectsWriter(Project::pathToProjectXML);
         projectsWriter.SetRoot(projectModel->Root());
         projectsWriter.Write();
     }
@@ -89,7 +94,7 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    XMLProjectsReader projectsReader("../projects.xml");
+    XMLProjectsReader projectsReader(Project::pathToProjectXML);
     projectsReader.SetRoot(projectModel->Root());
     projectsReader.Read();
 
@@ -133,6 +138,11 @@ void MainWindow::initSettingsFolder() const
     {
         hiddenFolder.mkdir(hiddenFolderName);
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *)
+{
+    on_actionSave_triggered();
 }
 
 void MainWindow::on_toolButton_startWorking_clicked()

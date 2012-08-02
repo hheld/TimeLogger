@@ -40,6 +40,8 @@ public:
 
     bool CheckConsistency() const;
 
+    static QString pathToProjectXML;
+
 private:
     QString name;
     QVector<Project*> subProjects;

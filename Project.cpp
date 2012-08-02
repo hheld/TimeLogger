@@ -1,5 +1,9 @@
 #include "Project.h"
 
+#include <QDir>
+
+QString Project::pathToProjectXML = QDir::homePath() + "/.timelogger/projects.xml";
+
 Project::Project(const QString &name, Project *parent) :
     name(name),
     parent(parent),

@@ -55,6 +55,8 @@ private:
     ProjectDatabase *pdb;
 
     void initSettingsFolder() const;
+
+    void closeEvent(QCloseEvent *);
 };
 
 #endif // MAINWINDOW_H
