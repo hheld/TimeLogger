@@ -25,22 +25,18 @@ void XMLProjectsWriter::SetRoot(Project *root)
     this->root = root;
 }
 
-bool XMLProjectsWriter::Write() const
+void XMLProjectsWriter::Write() const
 {
-    if(!root)
-    {
-        return false;
-    }
-
     xmlStreamWriter->writeStartDocument();
     xmlStreamWriter->writeStartElement("Projects");
 
-    WriteProject(root);
+    if(root)
+    {
+        WriteProject(root);
+    }
 
     xmlStreamWriter->writeEndElement(); // Projects
     xmlStreamWriter->writeEndDocument();
-
-    return true;
 }
 
 void XMLProjectsWriter::InitStreamWriter()
@@ -78,5 +74,8 @@ void XMLProjectsWriter::WriteProject(Project *p) const
         WriteProject(sp);
     }
 
-    xmlStreamWriter->writeEndElement(); // Project
+    if(p!=root)
+    {
+        xmlStreamWriter->writeEndElement(); // Project
+    }
 }

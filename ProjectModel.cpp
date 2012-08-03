@@ -250,6 +250,11 @@ bool ProjectModel::insertRow(int row, const QModelIndex &parent)
 
 bool ProjectModel::removeRow(int row, const QModelIndex &parent)
 {
+    if(row<0)
+    {
+        return false;
+    }
+
     Project *p = GetProject(parent);
 
     beginRemoveRows(parent, row, row);

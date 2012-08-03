@@ -79,12 +79,18 @@ void MainWindow::on_toolButton_removeProject_clicked()
 {
     QModelIndex index = ui->treeView_projects->currentIndex();
 
-    projectModel->removeRow(index.row(), index.parent());
+    bool success = projectModel->removeRow(index.row(), index.parent());
+
+    if(success)
+    {
+        currentlySelectedProject = 0;
+        currentProjectIndex = QModelIndex();
+    }
 }
 
 void MainWindow::on_actionSave_triggered()
 {
-    if(projectModel->Root()->NumOfSubprojects() > 0)
+    if(projectModel->Root()->NumOfSubprojects() >= 0)
     {
         XMLProjectsWriter projectsWriter(Project::pathToProjectXML);
         projectsWriter.SetRoot(projectModel->Root());
@@ -192,6 +198,5 @@ void MainWindow::addSecondToCurrentProject()
 {
     currentlySelectedProject->AddWorkedHours(1./3600.);
 
-//    ui->treeView_projects->update(ProjectModel::TopLevelIndex(currentProjectIndex));
     ui->treeView_projects->dataChanged(ProjectModel::TopLevelIndex(currentProjectIndex), currentProjectIndex);
 }
