@@ -30,6 +30,16 @@ void Project::Name(const QString &name)
     this->name = name;
 }
 
+QString Project::DbName() const
+{
+    QString dbName = name;
+
+    // replace whitespaces with underscores
+    dbName.replace(" ", "_");
+
+    return dbName;
+}
+
 Project *Project::Parent() const
 {
     return parent;

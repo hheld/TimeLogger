@@ -34,7 +34,7 @@ void ProjectDatabase::LogWorkingStart(Project *p, const QDateTime &start)
 
     QString startAsString = start.toString(Qt::ISODate);
 
-    QString sql = "INSERT INTO " + p->Name() + " (Start) VALUES ('" + startAsString + "')";
+    QString sql = "INSERT INTO " + p->DbName() + " (Start) VALUES ('" + startAsString + "')";
 
     QSqlQuery query(db);
 
@@ -55,7 +55,7 @@ void ProjectDatabase::LogWorkingEnd(Project *p, const QDateTime &end)
 
     QString startAsString = end.toString(Qt::ISODate);
 
-    QString sql = "UPDATE " + p->Name() + " SET End = '" + startAsString + "' WHERE Start='" + lastStartTime + "'";
+    QString sql = "UPDATE " + p->DbName() + " SET End = '" + startAsString + "' WHERE Start='" + lastStartTime + "'";
 
     QSqlQuery query(db);
 
@@ -69,7 +69,7 @@ void ProjectDatabase::LogWorkingEnd(Project *p, const QDateTime &end)
 
 void ProjectDatabase::AddProjectTable(Project *p)
 {
-    QString sql = "CREATE TABLE IF NOT EXISTS " + p->Name() + " (";
+    QString sql = "CREATE TABLE IF NOT EXISTS " + p->DbName() + " (";
 
     sql += "Start TEXT, ";
     sql += "End TEXT";

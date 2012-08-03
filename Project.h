@@ -13,6 +13,7 @@ public:
 
     const QString& Name() const;
     void Name(const QString &name);
+    QString DbName() const;
 
     Project* Parent() const;
     void Parent(Project* const parent);
