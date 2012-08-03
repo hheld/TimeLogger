@@ -151,6 +151,10 @@ void MainWindow::on_toolButton_startWorking_clicked()
     {
         pdb->LogWorkingStart(currentlySelectedProject, QDateTime::currentDateTime());
     }
+    else
+    {
+        return;
+    }
 
     isCurrentlyWorking = true;
 
