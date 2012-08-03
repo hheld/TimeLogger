@@ -15,7 +15,7 @@ public:
 
     void SetRoot(Project *root);
 
-    bool Write() const;
+    void Write() const;
 
 private:
     QString xmlFileName;
