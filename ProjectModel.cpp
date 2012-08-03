@@ -48,6 +48,26 @@ Project *ProjectModel::Root() const
     return root;
 }
 
+QModelIndex ProjectModel::TopLevelIndex(const QModelIndex &index)
+{
+    if(!index.isValid())
+    {
+        return QModelIndex();
+    }
+
+    QModelIndex topLevelParent = QModelIndex();
+    QModelIndex parent = index.parent();
+
+    while(parent.isValid())
+    {
+        topLevelParent = parent;
+
+        parent = parent.parent();
+    }
+
+    return topLevelParent.sibling(topLevelParent.row(), 3);
+}
+
 void ProjectModel::AddProject(Project *p)
 {
     p->Parent()->AddSubProject(p);

@@ -190,9 +190,8 @@ void MainWindow::on_toolButton_stopWorking_clicked()
 
 void MainWindow::addSecondToCurrentProject()
 {
-    double alreadyWorkedHours = currentlySelectedProject->WorkedHours();
+    currentlySelectedProject->AddWorkedHours(1./3600.);
 
-    currentlySelectedProject->WorkedHours(alreadyWorkedHours + 1./3600.);
-
-    ui->treeView_projects->update(currentProjectIndex);
+//    ui->treeView_projects->update(ProjectModel::TopLevelIndex(currentProjectIndex));
+    ui->treeView_projects->dataChanged(ProjectModel::TopLevelIndex(currentProjectIndex), currentProjectIndex);
 }

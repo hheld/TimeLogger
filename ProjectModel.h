@@ -28,6 +28,8 @@ public:
     bool insertRow(int row, const QModelIndex &parent = QModelIndex());
     bool removeRow(int row, const QModelIndex &parent = QModelIndex());
 
+    static QModelIndex TopLevelIndex(const QModelIndex &index);
+
 signals:
 
 public slots:

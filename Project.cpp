@@ -125,6 +125,17 @@ void Project::WorkedHours(const double &workedHours)
     this->workedHours = workedHours;
 }
 
+void Project::AddWorkedHours(const double &seconds)
+{
+    workedHours += seconds;
+
+    // also update parent project for consistency if there is any
+    if(parent)
+    {
+        parent->AddWorkedHours(seconds);
+    }
+}
+
 const QVector<Project *> &Project::AllSubprojects() const
 {
     return subProjects;

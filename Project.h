@@ -35,6 +35,7 @@ public:
 
     double WorkedHours() const;
     void WorkedHours(const double &workedHours);
+    void AddWorkedHours(const double &seconds);
 
     const QVector<Project*>& AllSubprojects() const;
 
