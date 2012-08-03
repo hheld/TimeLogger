@@ -148,6 +148,7 @@ void MainWindow::initSettingsFolder() const
 
 void MainWindow::closeEvent(QCloseEvent *)
 {
+    on_toolButton_stopWorking_clicked();
     on_actionSave_triggered();
 }
 
