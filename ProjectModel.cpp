@@ -237,6 +237,7 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
         break;
     case 3:
         currentProject->WorkedHours(value.toDouble());
+        emit totalOrPlannedHoursEdited(index);
         break;
     }
 
@@ -290,5 +291,5 @@ void ProjectModel::updateHoursOfAllParents(const QModelIndex &index)
 
     p->MakeHoursConsistent();
 
-    emit dataChanged(topParent.sibling(topParent.row(), 1), index.sibling(index.row(), 2));
+    emit dataChanged(topParent.sibling(topParent.row(), 1), index.sibling(index.row(), 3));
 }

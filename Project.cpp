@@ -209,6 +209,7 @@ void Project::MakeHoursConsistent()
     {
         myPlannedHours = 0.;
         totalBudgetHours = 0.;
+        workedHours = 0.;
 
         foreach(Project *sp, subProjects)
         {
@@ -216,6 +217,7 @@ void Project::MakeHoursConsistent()
 
             myPlannedHours += sp->myPlannedHours;
             totalBudgetHours += sp->totalBudgetHours;
+            workedHours += sp->workedHours;
         }
     }
 }
