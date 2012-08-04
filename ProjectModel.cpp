@@ -200,7 +200,16 @@ Qt::ItemFlags ProjectModel::flags(const QModelIndex &index) const
         return Qt::NoItemFlags;
     }
 
-    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
+    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+
+    Project *p = GetProject(index);
+
+    if(!p->HasChild())
+    {
+        flags |= Qt::ItemIsEditable;
+    }
+
+    return flags;
 }
 
 bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
