@@ -17,6 +17,9 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" rowspan="5" colspan="5">
      <widget class="ProjectTreeView" name="treeView_projects">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="editTriggers">
        <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
       </property>

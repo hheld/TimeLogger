@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeView_projects->setItemDelegateForColumn(0, lineEditDelegate);
     ui->treeView_projects->setItemDelegateForColumn(1, lineEditDelegate);
     ui->treeView_projects->setItemDelegateForColumn(2, lineEditDelegate);
+    ui->treeView_projects->setItemDelegateForColumn(3, lineEditDelegate);
 
     connect(ui->treeView_projects, SIGNAL(clicked(QModelIndex)), this, SLOT(updateLabelCurrentProject(QModelIndex)));
     connect(ui->treeView_projects, SIGNAL(clickedOutsideOfAnyRow()), this, SLOT(updateLabelCurrentProject()));

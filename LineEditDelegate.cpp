@@ -63,5 +63,26 @@ void LineEditDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         newOption.palette.setColor(QPalette::Text, QColor(255, 0, 0));
     }
 
+    if(col==3)
+    {
+        Project::State state = currentProject->GetState();
+
+        switch(state)
+        {
+        case Project::InBudet:
+            painter->fillRect(option.rect, QColor(0, 255, 0));
+            newOption.palette.setColor(QPalette::AlternateBase, QColor(0, 255, 0));
+            break;
+        case Project::ApproachingEndOfBudget:
+            painter->fillRect(option.rect, QColor(255, 128, 0));
+            newOption.palette.setColor(QPalette::AlternateBase, QColor(255, 128, 0));
+            break;
+        case Project::ExceededBudget:
+            painter->fillRect(option.rect, QColor(255, 0, 0));
+            newOption.palette.setColor(QPalette::AlternateBase, QColor(255, 0, 0));
+            break;
+        }
+    }
+
     QStyledItemDelegate::paint(painter, newOption, index);
 }

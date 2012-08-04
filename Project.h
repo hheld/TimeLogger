@@ -8,6 +8,8 @@
 class Project
 {
 public:
+    enum State {InBudet, ApproachingEndOfBudget, ExceededBudget};
+
     explicit Project(const QString &name, Project *parent = 0);
     ~Project();
 
@@ -41,6 +43,8 @@ public:
     const QVector<Project*>& AllSubprojects() const;
 
     bool CheckConsistency() const;
+
+    State GetState() const;
 
     static QString pathToProjectXML;
 

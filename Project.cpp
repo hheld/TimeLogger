@@ -181,3 +181,19 @@ bool Project::CheckConsistency() const
 
     return isConsistent;
 }
+
+Project::State Project::GetState() const
+{
+    if(workedHours < myPlannedHours - 10.)
+    {
+        return InBudet;
+    }
+    else if(workedHours >= myPlannedHours - 10. && workedHours <= myPlannedHours)
+    {
+        return ApproachingEndOfBudget;
+    }
+    else
+    {
+        return ExceededBudget;
+    }
+}
