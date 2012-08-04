@@ -129,7 +129,7 @@ void MainWindow::updateLabelCurrentProject(const QModelIndex &index)
     }
     else
     {
-        currentProjectName = p->Name();
+        currentProjectName = p->Name() + " (" + p->Parent()->Name() + ")";
         currentlySelectedProject = p;
 
         currentProjectIndex = index.sibling(index.row(), 3);
@@ -181,7 +181,7 @@ void MainWindow::on_toolButton_startWorking_clicked()
     ui->toolButton_startWorking->setEnabled(false);
     ui->toolButton_stopWorking->setEnabled(true);
 
-    ui->statusBar->showMessage(tr("Currently working on project '%1'.").arg(currentlySelectedProject->Name()));
+    ui->statusBar->showMessage(tr("Currently working on project '%1'.").arg(currentlySelectedProject->Name() + " (" + currentlySelectedProject->Parent()->Name() + ")"));
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(addSecondToCurrentProject()));
