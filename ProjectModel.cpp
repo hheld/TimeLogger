@@ -7,6 +7,7 @@ ProjectModel::ProjectModel(QObject *parent) :
     QAbstractItemModel(parent),
     root(new Project("root"))
 {
+    connect(this, SIGNAL(totalOrPlannedHoursEdited(QModelIndex)), this, SLOT(updateHoursOfAllParents(QModelIndex)));
 }
 
 ProjectModel::~ProjectModel()
@@ -228,9 +229,11 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
         break;
     case 1:
         currentProject->TotalHours(value.toDouble());
+        emit totalOrPlannedHoursEdited(index);
         break;
     case 2:
         currentProject->PlannedHours(value.toDouble());
+        emit totalOrPlannedHoursEdited(index);
         break;
     case 3:
         currentProject->WorkedHours(value.toDouble());
@@ -276,4 +279,16 @@ bool ProjectModel::removeRow(int row, const QModelIndex &parent)
     endRemoveRows();
 
     return true;
+}
+
+
+void ProjectModel::updateHoursOfAllParents(const QModelIndex &index)
+{
+    QModelIndex topParent = TopLevelIndex(index);
+
+    Project *p = GetProject(topParent);
+
+    p->MakeHoursConsistent();
+
+    emit dataChanged(topParent.sibling(topParent.row(), 1), index.sibling(index.row(), 2));
 }

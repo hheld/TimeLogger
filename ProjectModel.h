@@ -31,8 +31,10 @@ public:
     static QModelIndex TopLevelIndex(const QModelIndex &index);
 
 signals:
+    void totalOrPlannedHoursEdited(const QModelIndex &index);
 
 public slots:
+    void updateHoursOfAllParents(const QModelIndex &index);
 
 private:
     Project *root;

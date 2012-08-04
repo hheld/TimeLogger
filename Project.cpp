@@ -202,3 +202,20 @@ bool Project::HasChild() const
 {
     return subProjects.size() > 0;
 }
+
+void Project::MakeHoursConsistent()
+{
+    if(HasChild())
+    {
+        myPlannedHours = 0.;
+        totalBudgetHours = 0.;
+
+        foreach(Project *sp, subProjects)
+        {
+            sp->MakeHoursConsistent();
+
+            myPlannedHours += sp->myPlannedHours;
+            totalBudgetHours += sp->totalBudgetHours;
+        }
+    }
+}

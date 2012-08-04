@@ -48,6 +48,8 @@ public:
 
     bool HasChild() const;
 
+    void MakeHoursConsistent();
+
     static QString pathToProjectXML;
 
 private:
