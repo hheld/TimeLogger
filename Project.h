@@ -46,6 +46,8 @@ public:
 
     State GetState() const;
 
+    bool HasChild() const;
+
     static QString pathToProjectXML;
 
 private:

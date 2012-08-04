@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     updateLabelCurrentProject();
 
+    ui->toolButton_startWorking->setEnabled(false);
     ui->toolButton_stopWorking->setEnabled(false);
 
     // automatically save project XML every 10 minutes
@@ -123,6 +124,8 @@ void MainWindow::updateLabelCurrentProject(const QModelIndex &index)
     {
         currentProjectName = "None";
         currentlySelectedProject = 0;
+
+        ui->toolButton_startWorking->setEnabled(false);
     }
     else
     {
@@ -130,6 +133,15 @@ void MainWindow::updateLabelCurrentProject(const QModelIndex &index)
         currentlySelectedProject = p;
 
         currentProjectIndex = index.sibling(index.row(), 3);
+
+        if(!p->HasChild())
+        {
+            ui->toolButton_startWorking->setEnabled(true);
+        }
+        else
+        {
+            ui->toolButton_startWorking->setEnabled(false);
+        }
     }
 
     ui->label_selectedProject->setText(currentProjectName);

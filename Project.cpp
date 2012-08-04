@@ -197,3 +197,8 @@ Project::State Project::GetState() const
         return ExceededBudget;
     }
 }
+
+bool Project::HasChild() const
+{
+    return subProjects.size() > 0;
+}
