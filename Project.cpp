@@ -37,6 +37,16 @@ QString Project::DbName() const
     // replace whitespaces with underscores
     dbName.replace(" ", "_");
 
+    // to get a unique database name, we prepend all parents' names delimited by '_' to the name
+    Project *p = parent;
+
+    while(p != 0 && p->Name() != "root")
+    {
+        dbName.prepend(p->Name() + "_");
+
+        p = p->parent;
+    }
+
     return dbName;
 }
 
