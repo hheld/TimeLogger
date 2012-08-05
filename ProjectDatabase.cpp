@@ -6,7 +6,7 @@
 #include <QSqlError>
 #include <QDebug>
 
-QString ProjectDatabase::pathToDb = QDir::homePath() + "/.timelogger/projects.db";
+QString ProjectDatabase::pathToDb = QDir::homePath() + "/.timelogger/projects.sqlite";
 
 ProjectDatabase::ProjectDatabase()
 {
