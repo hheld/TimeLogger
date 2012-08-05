@@ -23,7 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    report = new Report;
+    pdb = new ProjectDatabase();
+
+    report = new Report(pdb);
 
     projectModel = new ProjectModel();
     ui->treeView_projects->setModel(projectModel);
@@ -39,8 +41,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(projectModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateLabelCurrentProject(QModelIndex)));
 
     initSettingsFolder();
-
-    pdb = new ProjectDatabase();
 
     updateLabelCurrentProject();
 

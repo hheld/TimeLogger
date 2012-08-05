@@ -1,9 +1,13 @@
 #include "Report.h"
 #include "ui_Report.h"
+#include "ProjectDatabase.h"
 
-Report::Report(QWidget *parent) :
+#include <QDebug>
+
+Report::Report(ProjectDatabase *db, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Report)
+    ui(new Ui::Report),
+    db(db)
 {
     ui->setupUi(this);
 
@@ -16,4 +20,18 @@ Report::Report(QWidget *parent) :
 Report::~Report()
 {
     delete ui;
+}
+
+void Report::on_pushButton_generateReport_clicked()
+{
+    QMap<QString, double> workedHours = db->GetProjectsWorkedHoursInRange(ui->dateEdit_from->date(), ui->dateEdit_to->date());
+
+    QMap<QString, double>::const_iterator cit = workedHours.constBegin();
+
+    while(cit != workedHours.constEnd())
+    {
+        qDebug() << cit.key() << cit.value();
+
+        ++cit;
+    }
 }

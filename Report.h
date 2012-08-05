@@ -7,16 +7,23 @@ namespace Ui {
 class Report;
 }
 
+class ProjectDatabase;
+
 class Report : public QWidget
 {
     Q_OBJECT
-    
+
 public:
-    explicit Report(QWidget *parent = 0);
+    explicit Report(ProjectDatabase *db, QWidget *parent = 0);
     ~Report();
-    
+
+private slots:
+    void on_pushButton_generateReport_clicked();
+
 private:
     Ui::Report *ui;
+
+    ProjectDatabase *db;
 };
 
 #endif // REPORT_H
