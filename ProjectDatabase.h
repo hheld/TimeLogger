@@ -21,7 +21,7 @@ private:
 
     /** Only does it if it doesn't exist yet.
      */
-    void AddProjectTable(Project *p);
+    void AddProjectTable();
 
     static QString pathToDb;
 };

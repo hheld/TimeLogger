@@ -30,11 +30,11 @@ ProjectDatabase::~ProjectDatabase()
 
 void ProjectDatabase::LogWorkingStart(Project *p, const QDateTime &start)
 {
-    AddProjectTable(p);
+    AddProjectTable();
 
     QString startAsString = start.toString(Qt::ISODate);
 
-    QString sql = "INSERT INTO " + p->DbName() + " (Start) VALUES ('" + startAsString + "')";
+    QString sql = "INSERT INTO Projects (Name, Start) VALUES ('" + p->DbName() + "', '" + startAsString + "')";
 
     QSqlQuery query(db);
 
@@ -51,11 +51,11 @@ void ProjectDatabase::LogWorkingStart(Project *p, const QDateTime &start)
 
 void ProjectDatabase::LogWorkingEnd(Project *p, const QDateTime &end)
 {
-    AddProjectTable(p);
+    AddProjectTable();
 
     QString startAsString = end.toString(Qt::ISODate);
 
-    QString sql = "UPDATE " + p->DbName() + " SET End = '" + startAsString + "' WHERE Start='" + lastStartTime + "'";
+    QString sql = "UPDATE Projects SET End = '" + startAsString + "' WHERE Start='" + lastStartTime + "' AND Name='" + p->DbName() + "'";
 
     QSqlQuery query(db);
 
@@ -67,12 +67,14 @@ void ProjectDatabase::LogWorkingEnd(Project *p, const QDateTime &end)
     }
 }
 
-void ProjectDatabase::AddProjectTable(Project *p)
+void ProjectDatabase::AddProjectTable()
 {
-    QString sql = "CREATE TABLE IF NOT EXISTS " + p->DbName() + " (";
+    QString sql = "CREATE TABLE IF NOT EXISTS Projects (";
 
+    sql += "Name TEXT, ";
     sql += "Start TEXT, ";
-    sql += "End TEXT";
+    sql += "End TEXT, ";
+    sql += "PRIMARY KEY (Start, End)";
     sql += ")";
 
     QSqlQuery query(db);
