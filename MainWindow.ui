@@ -138,36 +138,15 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionOpen"/>
-   <addaction name="actionSave"/>
+   <addaction name="actionReport"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionSave">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <action name="actionReport">
    <property name="text">
-    <string>Save ...</string>
+    <string>Report</string>
    </property>
    <property name="toolTip">
-    <string>Save projects to XML file</string>
-   </property>
-   <property name="visible">
-    <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionOpen">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Open ...</string>
-   </property>
-   <property name="toolTip">
-    <string>Load projects from XML file</string>
-   </property>
-   <property name="visible">
-    <bool>false</bool>
+    <string>Generate a report of worked hours</string>
    </property>
   </action>
  </widget>

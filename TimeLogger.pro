@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     XMLProjectsWriter.cpp \
     XMLProjectsReader.cpp \
     LineEditDelegate.cpp \
-    ProjectDatabase.cpp
+    ProjectDatabase.cpp \
+    Report.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
@@ -29,6 +30,8 @@ HEADERS  += MainWindow.h \
     XMLProjectsWriter.h \
     XMLProjectsReader.h \
     LineEditDelegate.h \
-    ProjectDatabase.h
+    ProjectDatabase.h \
+    Report.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    Report.ui

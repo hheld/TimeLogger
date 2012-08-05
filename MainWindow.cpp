@@ -11,15 +11,19 @@
 #include "XMLProjectsReader.h"
 #include "LineEditDelegate.h"
 #include "ProjectDatabase.h"
+#include "Report.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    report(0),
     currentlySelectedProject(0),
     isCurrentlyWorking(false),
     pdb(0)
 {
     ui->setupUi(this);
+
+    report = new Report;
 
     projectModel = new ProjectModel();
     ui->treeView_projects->setModel(projectModel);
@@ -45,10 +49,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // automatically save project XML every 10 minutes
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(on_actionSave_triggered()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(SaveProjectXMLFile()));
     timer->start(60*10*1000);
 
-    on_actionOpen_triggered();
+    OpenProjectXMLFile();
 }
 
 MainWindow::~MainWindow()
@@ -57,6 +61,7 @@ MainWindow::~MainWindow()
     delete projectModel;
     delete lineEditDelegate;
     delete pdb;
+    delete report;
 }
 
 void MainWindow::on_toolButton_addProject_clicked()
@@ -90,7 +95,7 @@ void MainWindow::on_toolButton_removeProject_clicked()
     }
 }
 
-void MainWindow::on_actionSave_triggered()
+void MainWindow::SaveProjectXMLFile()
 {
     if(projectModel->Root()->NumOfSubprojects() >= 0)
     {
@@ -100,7 +105,7 @@ void MainWindow::on_actionSave_triggered()
     }
 }
 
-void MainWindow::on_actionOpen_triggered()
+void MainWindow::OpenProjectXMLFile()
 {
     XMLProjectsReader projectsReader(Project::pathToProjectXML);
     projectsReader.SetRoot(projectModel->Root());
@@ -162,7 +167,9 @@ void MainWindow::initSettingsFolder() const
 void MainWindow::closeEvent(QCloseEvent *)
 {
     on_toolButton_stopWorking_clicked();
-    on_actionSave_triggered();
+    SaveProjectXMLFile();
+
+    report->close();
 }
 
 void MainWindow::on_toolButton_startWorking_clicked()
@@ -213,4 +220,9 @@ void MainWindow::addSecondToCurrentProject()
     currentlySelectedProject->AddWorkedHours(1./3600.);
 
     ui->treeView_projects->dataChanged(ProjectModel::TopLevelIndex(currentProjectIndex), currentProjectIndex);
+}
+
+void MainWindow::on_actionReport_triggered()
+{
+    report->show();
 }
