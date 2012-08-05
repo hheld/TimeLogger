@@ -32,6 +32,8 @@ private:
 
     void AddHtmlHeader();
     void AddHtmlFooter();
+
+    void GetMapProjectName2RowIndex(QMap<QString, int> &projectName2RowIndex, const QList<QList<QPair<QString, double> > > &listOfProjects);
 };
 
 #endif // REPORT_H
