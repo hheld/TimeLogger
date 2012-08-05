@@ -4,6 +4,7 @@
 #include <QtSql/QSqlDatabase>
 #include <QDateTime>
 #include <QMap>
+#include <QPair>
 
 class Project;
 
@@ -16,7 +17,8 @@ public:
     void LogWorkingStart(Project *p, const QDateTime &start);
     void LogWorkingEnd(Project *p, const QDateTime &end);
 
-    QMap<QString, double> GetProjectsWorkedHoursInRange(const QDate &from, const QDate &to) const;
+    QMap<QString, double> GetProjectsTotalWorkedHoursInRange(const QDate &from, const QDate &to) const;
+    QMap<QDate, QList<QPair<QString, double> > > GetProjectsDailyWorkedHoursInRange(const QDate &from, const QDate &to) const;
 
 private:
     QSqlDatabase db;
@@ -25,6 +27,8 @@ private:
     /** Only does it if it doesn't exist yet.
      */
     void AddProjectTable();
+
+    static void UpdateWorkedHoursInList(QList<QPair<QString, double> > &list, const QString &name, const double &workedHours);
 
     static QString pathToDb;
 };

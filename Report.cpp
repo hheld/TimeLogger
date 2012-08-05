@@ -24,14 +24,18 @@ Report::~Report()
 
 void Report::on_pushButton_generateReport_clicked()
 {
-    QMap<QString, double> workedHours = db->GetProjectsWorkedHoursInRange(ui->dateEdit_from->date(), ui->dateEdit_to->date());
+    QMap<QString, double> workedHoursTotal = db->GetProjectsTotalWorkedHoursInRange(ui->dateEdit_from->date(), ui->dateEdit_to->date());
 
-    QMap<QString, double>::const_iterator cit = workedHours.constBegin();
+    QMap<QString, double>::const_iterator cit = workedHoursTotal.constBegin();
 
-    while(cit != workedHours.constEnd())
+    while(cit != workedHoursTotal.constEnd())
     {
         qDebug() << cit.key() << cit.value();
 
         ++cit;
     }
+
+    QMap<QDate, QList<QPair<QString, double> > > workedHoursPerDay = db->GetProjectsDailyWorkedHoursInRange(ui->dateEdit_from->date(), ui->dateEdit_to->date());
+
+    qDebug() << workedHoursPerDay;
 }
