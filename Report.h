@@ -34,6 +34,8 @@ private:
     void AddHtmlFooter();
 
     void GetMapProjectName2RowIndex(QMap<QString, int> &projectName2RowIndex, const QList<QList<QPair<QString, double> > > &listOfProjects);
+
+    static double RoundHours(const double &hours);
 };
 
 #endif // REPORT_H
