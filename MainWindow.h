@@ -26,6 +26,10 @@ public:
 signals:
     void stoppedWorking();
 
+public slots:
+    void SaveProjectXMLFile();
+    void on_toolButton_stopWorking_clicked();
+
 private slots:
     void on_toolButton_addProject_clicked();
 
@@ -35,11 +39,7 @@ private slots:
 
     void on_toolButton_startWorking_clicked();
 
-    void on_toolButton_stopWorking_clicked();
-
     void addSecondToCurrentProject();
-
-    void SaveProjectXMLFile();
 
     void on_actionReport_triggered();
 
