@@ -44,24 +44,6 @@ void Report::GetMapProjectName2RowIndex(QMap<QString, int> &projectName2RowIndex
     }
 }
 
-double Report::RoundHours(const double &hours)
-{
-    int trunc = 10.*hours;
-
-    int modFive = trunc%5;
-
-    if(modFive<3)
-    {
-        trunc -= modFive;
-    }
-    else
-    {
-        trunc += 5 - modFive;
-    }
-
-    return static_cast<double>(trunc / 10.);
-}
-
 void Report::on_pushButton_generateReport_clicked()
 {
     clearHtml();
@@ -87,7 +69,7 @@ void Report::on_pushButton_generateReport_clicked()
         html += "<tr>";
 
         html += "<td>" + cit.key() + "</td>";
-        html += "<td>" + QString::number(RoundHours(cit.value())) + "</td>";
+        html += "<td>" + QString::number(cit.value()) + "</td>";
 
         html += "</tr>";
 
@@ -162,7 +144,7 @@ void Report::on_pushButton_generateReport_clicked()
                 {
                     double hours = cit->second;
 
-                    html += "<td>" + QString::number(RoundHours(hours)) + "</td>";
+                    html += "<td>" + QString::number(hours) + "</td>";
 
                     projectFound = true;
                     break;

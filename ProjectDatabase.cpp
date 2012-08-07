@@ -92,7 +92,7 @@ QMap<QString, double> ProjectDatabase::GetProjectsTotalWorkedHoursInRange(const 
             QString projectName = query.value(0).toString();
             QDateTime projectStart = query.value(1).toDateTime();
             QDateTime projectEnd = query.value(2).toDateTime();
-            double workedHours = projectStart.secsTo(projectEnd) / 3600.;
+            double workedHours = RoundHours(projectStart.secsTo(projectEnd) / 3600.);
 
             if(project2hours.contains(projectName))
             {
@@ -137,7 +137,7 @@ QMap<QDate, QList<QPair<QString, double> > > ProjectDatabase::GetProjectsDailyWo
                 QString projectName = query.value(0).toString();
                 QDateTime projectStart = query.value(1).toDateTime();
                 QDateTime projectEnd = query.value(2).toDateTime();
-                double workedHours = projectStart.secsTo(projectEnd) / 3600.;
+                double workedHours = RoundHours(projectStart.secsTo(projectEnd) / 3600.);
 
                 QList<QPair<QString, double> > &listOfProjects = dates2Projects[from.addDays(i)];
 
@@ -185,4 +185,22 @@ void ProjectDatabase::UpdateWorkedHoursInList(QList<QPair<QString, double> > &li
     {
         list.append(qMakePair(name, workedHours));
     }
+}
+
+double ProjectDatabase::RoundHours(const double &hours)
+{
+    int trunc = 10.*hours;
+
+    int modFive = trunc%5;
+
+    if(modFive<3)
+    {
+        trunc -= modFive;
+    }
+    else
+    {
+        trunc += 5 - modFive;
+    }
+
+    return static_cast<double>(trunc / 10.);
 }
