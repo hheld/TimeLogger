@@ -57,8 +57,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     OpenProjectXMLFile();
 
+    sysTrayIcon->setIcon(style()->standardPixmap(QStyle::SP_ComputerIcon));
     sysTrayIcon->show();
-    sysTrayIcon->showMessage("Message title", "the message");
 }
 
 MainWindow::~MainWindow()
