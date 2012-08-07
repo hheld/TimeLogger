@@ -17,8 +17,15 @@ public:
     void LogWorkingStart(Project *p, const QDateTime &start);
     void LogWorkingEnd(Project *p, const QDateTime &end);
 
+    /** The returned hours already are rounded to half hours.
+     */
     QMap<QString, double> GetProjectsTotalWorkedHoursInRange(const QDate &from, const QDate &to) const;
+
+    /** The returned hours already are rounded to half hours.
+     */
     QMap<QDate, QList<QPair<QString, double> > > GetProjectsDailyWorkedHoursInRange(const QDate &from, const QDate &to) const;
+
+    static double RoundHours(const double &hours);
 
 private:
     QSqlDatabase db;
