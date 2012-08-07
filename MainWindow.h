@@ -14,6 +14,7 @@ class ProjectModel;
 class LineEditDelegate;
 class ProjectDatabase;
 class Report;
+class QSystemTrayIcon;
 
 class MainWindow : public QMainWindow
 {
@@ -56,6 +57,8 @@ private:
     bool isCurrentlyWorking;
 
     ProjectDatabase *pdb;
+
+    QSystemTrayIcon *sysTrayIcon;
 
     void initSettingsFolder() const;
 

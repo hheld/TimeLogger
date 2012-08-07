@@ -3,6 +3,7 @@
 
 #include <QDir>
 #include <QTimer>
+#include <QSystemTrayIcon>
 #include <QDebug>
 
 #include "Project.h"
@@ -19,11 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
     report(0),
     currentlySelectedProject(0),
     isCurrentlyWorking(false),
-    pdb(0)
+    pdb(0),
+    sysTrayIcon(0)
 {
     ui->setupUi(this);
 
     pdb = new ProjectDatabase();
+    sysTrayIcon = new QSystemTrayIcon(this);
 
     report = new Report(pdb);
 
@@ -53,6 +56,9 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start(60*10*1000);
 
     OpenProjectXMLFile();
+
+    sysTrayIcon->show();
+    sysTrayIcon->showMessage("Message title", "the message");
 }
 
 MainWindow::~MainWindow()
