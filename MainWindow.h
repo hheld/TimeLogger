@@ -50,6 +50,8 @@ private slots:
 
     void trayAction_quit_triggered();
 
+    void askUserIfStillWorking();
+
 private:
     Ui::MainWindow *ui;
 

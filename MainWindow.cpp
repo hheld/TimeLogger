@@ -31,7 +31,15 @@ void MainWindow::SetupSystemTrayIcon()
     // finally, just quit
     connect(trayAction_quit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
+    // open window if the message bubble is clicked
+    connect(sysTrayIcon, SIGNAL(messageClicked()), this, SLOT(show()));
+
     sysTrayIcon->setContextMenu(systemTrayMenu);
+
+    // ask the user every 30 minutes if he/she is still working on the same project
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(askUserIfStillWorking()));
+    timer->start(1000*60*30);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -292,4 +300,16 @@ void MainWindow::trayAction_quit_triggered()
 {
     SaveProjectXMLFile();
     on_toolButton_stopWorking_clicked();
+}
+
+void MainWindow::askUserIfStillWorking()
+{
+    if(currentlySelectedProject && isCurrentlyWorking)
+    {
+        sysTrayIcon->showMessage(tr("TimeLogger"), tr("Still working on %1 (%2)?").arg(currentlySelectedProject->Name()).arg(currentlySelectedProject->Parent()->Name()));
+    }
+    else
+    {
+        sysTrayIcon->showMessage(tr("TimeLogger"), tr("Are you really working on nothing currently??"));
+    }
 }
