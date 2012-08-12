@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     LineEditDelegate.cpp \
     ProjectDatabase.cpp \
     Report.cpp \
-    DayView.cpp
+    DayView.cpp \
+    DayGraphicsView.cpp \
+    DayGraphicsScene.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
@@ -33,7 +35,9 @@ HEADERS  += MainWindow.h \
     LineEditDelegate.h \
     ProjectDatabase.h \
     Report.h \
-    DayView.h
+    DayView.h \
+    DayGraphicsView.h \
+    DayGraphicsScene.h
 
 FORMS    += MainWindow.ui \
     Report.ui \
