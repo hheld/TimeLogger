@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Project Overview</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/Resources/AppIcon.svg</normaloff>:/icons/Resources/AppIcon.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" rowspan="5" colspan="5">
@@ -158,7 +162,9 @@
    <header>ProjectTreeView.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>toolButton_unfoldAll</sender>

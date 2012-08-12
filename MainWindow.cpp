@@ -17,7 +17,7 @@
 
 void MainWindow::SetupSystemTrayIcon()
 {
-    sysTrayIcon->setIcon(style()->standardPixmap(QStyle::SP_ComputerIcon));
+    sysTrayIcon->setIcon(QIcon(":/icons/Resources/AppIcon.svg"));
 
     systemTrayMenu = new QMenu(this);
 
