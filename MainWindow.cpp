@@ -3,7 +3,8 @@
 
 #include <QDir>
 #include <QTimer>
-#include <QSystemTrayIcon>
+#include <QMenu>
+#include <QApplication>
 #include <QDebug>
 
 #include "Project.h"
@@ -14,6 +15,21 @@
 #include "ProjectDatabase.h"
 #include "Report.h"
 
+void MainWindow::SetupSystemTrayIcon()
+{
+    sysTrayIcon->setIcon(style()->standardPixmap(QStyle::SP_ComputerIcon));
+
+    systemTrayMenu = new QMenu(this);
+
+    trayAction_quit = new QAction(tr("Quit"), systemTrayMenu);
+
+    systemTrayMenu->addAction(trayAction_quit);
+
+    connect(trayAction_quit, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+    sysTrayIcon->setContextMenu(systemTrayMenu);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -21,7 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
     currentlySelectedProject(0),
     isCurrentlyWorking(false),
     pdb(0),
-    sysTrayIcon(0)
+    sysTrayIcon(0),
+    systemTrayMenu(0),
+    trayAction_quit(0)
 {
     ui->setupUi(this);
 
@@ -57,8 +75,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     OpenProjectXMLFile();
 
-    sysTrayIcon->setIcon(style()->standardPixmap(QStyle::SP_ComputerIcon));
+    SetupSystemTrayIcon();
     sysTrayIcon->show();
+
+    connect(sysTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconClicked(QSystemTrayIcon::ActivationReason)));
+
+    // disable close button of window
+    setWindowFlags(windowFlags() & ~Qt::WindowCloseButtonHint);
 }
 
 MainWindow::~MainWindow()
@@ -68,6 +91,8 @@ MainWindow::~MainWindow()
     delete lineEditDelegate;
     delete pdb;
     delete report;
+    delete sysTrayIcon;
+    delete systemTrayMenu;
 }
 
 void MainWindow::on_toolButton_addProject_clicked()
@@ -231,4 +256,30 @@ void MainWindow::addSecondToCurrentProject()
 void MainWindow::on_actionReport_triggered()
 {
     report->show();
+}
+
+void MainWindow::systemTrayIconClicked(const QSystemTrayIcon::ActivationReason &reason)
+{
+    switch(reason)
+    {
+    case QSystemTrayIcon::Trigger:
+        if(isVisible())
+        {
+            hide();
+            report->hide();
+        }
+        else
+        {
+            show();
+        }
+
+        break;
+
+    case QSystemTrayIcon::Context:
+        systemTrayMenu->show();
+        break;
+
+    default:
+        break;
+    }
 }

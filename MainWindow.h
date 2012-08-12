@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include <QModelIndex>
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class MainWindow;
@@ -14,7 +15,8 @@ class ProjectModel;
 class LineEditDelegate;
 class ProjectDatabase;
 class Report;
-class QSystemTrayIcon;
+class QMenu;
+class QAction;
 
 class MainWindow : public QMainWindow
 {
@@ -44,6 +46,8 @@ private slots:
 
     void on_actionReport_triggered();
 
+    void systemTrayIconClicked(const QSystemTrayIcon::ActivationReason &reason);
+
 private:
     Ui::MainWindow *ui;
 
@@ -59,10 +63,13 @@ private:
     ProjectDatabase *pdb;
 
     QSystemTrayIcon *sysTrayIcon;
+    QMenu *systemTrayMenu;
+    QAction *trayAction_quit;
 
     void initSettingsFolder() const;
 
     void OpenProjectXMLFile();
+    void SetupSystemTrayIcon();
 
     void closeEvent(QCloseEvent *);
 };
