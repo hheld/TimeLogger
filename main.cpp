@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     mw = &w;
-    w.show();
+//    w.show();
 
     //configure app's reaction to OS signals
     struct sigaction act, oact;
