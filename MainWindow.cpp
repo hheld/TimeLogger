@@ -14,6 +14,7 @@
 #include "LineEditDelegate.h"
 #include "ProjectDatabase.h"
 #include "Report.h"
+#include "DayView.h"
 
 void MainWindow::SetupSystemTrayIcon()
 {
@@ -46,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     report(0),
+    dayView(0),
     currentlySelectedProject(0),
     isCurrentlyWorking(false),
     pdb(0),
@@ -59,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     sysTrayIcon = new QSystemTrayIcon(this);
 
     report = new Report(pdb);
+    dayView = new DayView;
 
     projectModel = new ProjectModel();
     ui->treeView_projects->setModel(projectModel);
@@ -103,6 +106,7 @@ MainWindow::~MainWindow()
     delete lineEditDelegate;
     delete pdb;
     delete report;
+    delete dayView;
     delete sysTrayIcon;
     delete systemTrayMenu;
 }
@@ -312,4 +316,9 @@ void MainWindow::askUserIfStillWorking()
     {
         sysTrayIcon->showMessage(tr("TimeLogger"), tr("Are you really working on nothing currently??"));
     }
+}
+
+void MainWindow::on_actionDay_view_triggered()
+{
+    dayView->show();
 }

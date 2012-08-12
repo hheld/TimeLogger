@@ -143,6 +143,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionReport"/>
+   <addaction name="actionDay_view"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionReport">
@@ -151,6 +152,14 @@
    </property>
    <property name="toolTip">
     <string>Generate a report of worked hours</string>
+   </property>
+  </action>
+  <action name="actionDay_view">
+   <property name="text">
+    <string>Day view</string>
+   </property>
+   <property name="toolTip">
+    <string>View worked hours on a particular day</string>
    </property>
   </action>
  </widget>

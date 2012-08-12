@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     XMLProjectsReader.cpp \
     LineEditDelegate.cpp \
     ProjectDatabase.cpp \
-    Report.cpp
+    Report.cpp \
+    DayView.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
@@ -31,10 +32,12 @@ HEADERS  += MainWindow.h \
     XMLProjectsReader.h \
     LineEditDelegate.h \
     ProjectDatabase.h \
-    Report.h
+    Report.h \
+    DayView.h
 
 FORMS    += MainWindow.ui \
-    Report.ui
+    Report.ui \
+    DayView.ui
 
 RESOURCES += \
     resources.qrc

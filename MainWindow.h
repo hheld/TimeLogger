@@ -17,6 +17,7 @@ class ProjectDatabase;
 class Report;
 class QMenu;
 class QAction;
+class DayView;
 
 class MainWindow : public QMainWindow
 {
@@ -52,6 +53,8 @@ private slots:
 
     void askUserIfStillWorking();
 
+    void on_actionDay_view_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -59,6 +62,7 @@ private:
     LineEditDelegate *lineEditDelegate;
 
     Report *report;
+    DayView *dayView;
 
     QModelIndex currentProjectIndex;
     Project *currentlySelectedProject;
