@@ -25,6 +25,10 @@ void MainWindow::SetupSystemTrayIcon()
 
     systemTrayMenu->addAction(trayAction_quit);
 
+    // make sure everything is saved before we quit
+    connect(trayAction_quit, SIGNAL(triggered()), this, SLOT(trayAction_quit_triggered()));
+
+    // finally, just quit
     connect(trayAction_quit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     sysTrayIcon->setContextMenu(systemTrayMenu);
@@ -282,4 +286,10 @@ void MainWindow::systemTrayIconClicked(const QSystemTrayIcon::ActivationReason &
     default:
         break;
     }
+}
+
+void MainWindow::trayAction_quit_triggered()
+{
+    SaveProjectXMLFile();
+    on_toolButton_stopWorking_clicked();
 }

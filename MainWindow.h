@@ -48,6 +48,8 @@ private slots:
 
     void systemTrayIconClicked(const QSystemTrayIcon::ActivationReason &reason);
 
+    void trayAction_quit_triggered();
+
 private:
     Ui::MainWindow *ui;
 
