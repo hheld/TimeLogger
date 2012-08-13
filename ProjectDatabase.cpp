@@ -149,6 +149,39 @@ QMap<QDate, QList<QPair<QString, double> > > ProjectDatabase::GetProjectsDailyWo
     return dates2Projects;
 }
 
+QMap<QString, QList<QPair<QDateTime, QDateTime> > > ProjectDatabase::GetProjectDetailsForDay(const QDate &day) const
+{
+    QMap<QString, QList<QPair<QDateTime, QDateTime> > > projects2Details;
+
+    QString sql;
+
+    sql  = "SELECT name, Start, End FROM Projects ";
+    sql += "WHERE Start >= '" + day.toString(Qt::ISODate) + "' AND End < '" + day.addDays(1).toString(Qt::ISODate) + "' ";
+    sql += "ORDER BY name";
+
+    QSqlQuery query(db);
+
+    bool query_ok = query.exec(sql);
+
+    if(!query_ok)
+    {
+        qDebug() << query.lastError().text();
+    }
+
+    while(query.next())
+    {
+        QString projectName = query.value(0).toString();
+        QDateTime projectStart = query.value(1).toDateTime();
+        QDateTime projectEnd = query.value(2).toDateTime();
+
+        QList<QPair<QDateTime, QDateTime > > &listOfDetails = projects2Details[projectName];
+
+        listOfDetails.append(qMakePair(projectStart, projectEnd));
+    }
+
+    return projects2Details;
+}
+
 void ProjectDatabase::AddProjectTable()
 {
     QString sql = "CREATE TABLE IF NOT EXISTS Projects (";

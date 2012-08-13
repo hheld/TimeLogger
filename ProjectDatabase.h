@@ -25,6 +25,8 @@ public:
      */
     QMap<QDate, QList<QPair<QString, double> > > GetProjectsDailyWorkedHoursInRange(const QDate &from, const QDate &to) const;
 
+    QMap<QString, QList<QPair<QDateTime, QDateTime> > > GetProjectDetailsForDay(const QDate &day) const;
+
     static double RoundHours(const double &hours);
 
 private:

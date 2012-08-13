@@ -8,6 +8,8 @@ class DayView;
 }
 
 class DayGraphicsScene;
+class ProjectDatabase;
+class QDate;
 
 class DayView : public QWidget
 {
@@ -17,10 +19,16 @@ public:
     explicit DayView(QWidget *parent = 0);
     ~DayView();
 
+    void SetProjectDatabase(ProjectDatabase *db);
+
+private slots:
+    void on_dateEdit_selectDay_dateChanged(const QDate &date);
+
 private:
     Ui::DayView *ui;
 
     DayGraphicsScene *dayScene;
+    ProjectDatabase *db;
 };
 
 #endif // DAYVIEW_H

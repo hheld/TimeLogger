@@ -61,7 +61,9 @@ MainWindow::MainWindow(QWidget *parent) :
     sysTrayIcon = new QSystemTrayIcon(this);
 
     report = new Report(pdb);
+
     dayView = new DayView;
+    dayView->SetProjectDatabase(pdb);
 
     projectModel = new ProjectModel();
     ui->treeView_projects->setModel(projectModel);
