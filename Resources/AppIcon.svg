@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="AppIcon.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -51,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -62,13 +62,13 @@
      transform="translate(0,-1036.3622)">
     <path
        sodipodi:type="arc"
-       style="fill:#ff0000;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.10000000000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#095bff;fill-rule:evenodd;stroke:none;stroke-width:0.10000000000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:0.39215686999999999"
        id="path2989"
        sodipodi:cx="8"
        sodipodi:cy="8"
        sodipodi:rx="8"
        sodipodi:ry="8"
-       d="M 16,8 A 8,8 0 1 1 0,8 8,8 0 1 1 16,8 z"
+       d="m 16,8 c 0,4.418278 -3.581722,8 -8,8 C 3.581722,16 0,12.418278 0,8 0,3.581722 3.581722,0 8,0 c 4.418278,0 8,3.581722 8,8 z"
        transform="translate(0,1036.3622)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.93541437px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
