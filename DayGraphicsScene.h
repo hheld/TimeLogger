@@ -2,6 +2,9 @@
 #define DAYGRAPHICSSCENE_H
 
 #include <QGraphicsScene>
+#include <QTime>
+
+class QDateTime;
 
 class DayGraphicsScene : public QGraphicsScene
 {
@@ -9,12 +12,23 @@ class DayGraphicsScene : public QGraphicsScene
 public:
     explicit DayGraphicsScene(QObject *parent = 0);
 
+    double MapTimeToXCoord(const QDateTime &time) const;
+
+    double minX;
+    double maxX;
+
+    double minY;
+    double maxY;
+
 signals:
 
 public slots:
 
 private:
     void drawBackground(QPainter *painter, const QRectF &rect);
+
+    QTime startWorkDay;
+    double workingHoursPerDay;
 };
 
 #endif // DAYGRAPHICSSCENE_H

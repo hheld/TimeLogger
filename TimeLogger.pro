@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     Report.cpp \
     DayView.cpp \
     DayGraphicsView.cpp \
-    DayGraphicsScene.cpp
+    DayGraphicsScene.cpp \
+    ProjectGraphicsItem.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
@@ -37,7 +38,8 @@ HEADERS  += MainWindow.h \
     Report.h \
     DayView.h \
     DayGraphicsView.h \
-    DayGraphicsScene.h
+    DayGraphicsScene.h \
+    ProjectGraphicsItem.h
 
 FORMS    += MainWindow.ui \
     Report.ui \
