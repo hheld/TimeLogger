@@ -26,11 +26,22 @@ QRectF ProjectGraphicsItem::boundingRect() const
 
 void ProjectGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
     QRectF br = boundingRect();
 
-    painter->setPen(Qt::red);
-    painter->fillRect(br, QBrush(Qt::red, Qt::BDiagPattern));
+
+//    painter->fillRect(br, QBrush(QColor(9, 91, 255), Qt::BDiagPattern));
+    painter->fillRect(br, QBrush(QColor(9, 91, 255, 100), Qt::SolidPattern));
+
+    painter->save();
+    painter->setPen(QColor(35, 73, 108));
     painter->drawRect(br);
+    painter->restore();
+
+    painter->setPen(Qt::white);
+    painter->drawText(br, projectName, QTextOption(Qt::AlignCenter));
 }
 
 void ProjectGraphicsItem::SetProjectInfo(const QString &name, const QDateTime &start, const QDateTime &end, const int &numOfProjectsThisDay, const int &indexOfThisProject)

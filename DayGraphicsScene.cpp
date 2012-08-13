@@ -67,4 +67,9 @@ void DayGraphicsScene::drawBackground(QPainter *painter, const QRectF &rect)
     painter->setPen(pen);
     painter->drawLines(verticalGridLines);
     painter->restore();
+
+    painter->save();
+    painter->setBrush(QBrush(QColor(70, 70, 70, 50), Qt::SolidPattern));
+    painter->drawRect(QRectF(minX, minY, maxX-minX, maxY-minY));
+    painter->restore();
 }
