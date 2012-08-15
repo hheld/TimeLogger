@@ -15,8 +15,6 @@ DayView::DayView(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->dateEdit_selectDay->setDate(QDate::currentDate());
-
     dayScene = new DayGraphicsScene(this);
 
     ui->graphicsView->setScene(dayScene);
@@ -31,8 +29,6 @@ DayView::~DayView()
 void DayView::SetProjectDatabase(ProjectDatabase *db)
 {
     this->db = db;
-
-    on_dateEdit_selectDay_dateChanged(QDate::currentDate());
 }
 
 void DayView::on_dateEdit_selectDay_dateChanged(const QDate &date)
@@ -87,4 +83,9 @@ void DayView::on_dateEdit_selectDay_dateChanged(const QDate &date)
     {
         dayScene->setSceneRect(dayScene->itemsBoundingRect());
     }
+}
+
+void DayView::paintEvent(QPaintEvent *)
+{
+    ui->dateEdit_selectDay->setDate(QDate::currentDate());
 }

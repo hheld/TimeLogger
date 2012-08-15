@@ -29,6 +29,8 @@ private:
 
     DayGraphicsScene *dayScene;
     ProjectDatabase *db;
+
+    void paintEvent(QPaintEvent *);
 };
 
 #endif // DAYVIEW_H
