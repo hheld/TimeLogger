@@ -36,6 +36,7 @@ void MainWindow::SetupSystemTrayIcon()
     connect(sysTrayIcon, SIGNAL(messageClicked()), this, SLOT(show()));
 
     sysTrayIcon->setContextMenu(systemTrayMenu);
+    sysTrayIcon->setToolTip(tr("TimeLogger"));
 
     // ask the user every 30 minutes if he/she is still working on the same project
     QTimer *timer = new QTimer(this);
