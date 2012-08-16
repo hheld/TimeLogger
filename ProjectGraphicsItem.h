@@ -29,6 +29,8 @@ public:
      */
     void RemoveFromDb() const;
 
+    QDate Date() const;
+
 private:
     QString originalProjectName;
     QDateTime originalStart;

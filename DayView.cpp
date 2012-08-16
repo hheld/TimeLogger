@@ -23,6 +23,7 @@ DayView::DayView(QWidget *parent) :
     ui->graphicsView->setScene(dayScene);
 
     connect(dayScene, SIGNAL(itemChanged()), this, SLOT(itemChanged()));
+    connect(dayScene, SIGNAL(itemRemoved(QDate)), this, SLOT(on_dateEdit_selectDay_dateChanged(QDate)));
 }
 
 DayView::~DayView()

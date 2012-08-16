@@ -27,6 +27,7 @@ public:
 
 signals:
     void itemChanged();
+    void itemRemoved(const QDate &date);
 
 public slots:
 

@@ -241,3 +241,8 @@ void ProjectGraphicsItem::RemoveFromDb() const
         qDebug() << query.lastError().text();
     }
 }
+
+QDate ProjectGraphicsItem::Date() const
+{
+    return start.date();
+}

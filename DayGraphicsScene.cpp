@@ -54,15 +54,21 @@ void DayGraphicsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
         QAction *a = menu.addAction("Remove");
 
+        QDate date;
+
         if(menu.exec(event->screenPos()) == a)
         {
             ProjectGraphicsItem *p = dynamic_cast<ProjectGraphicsItem*>(i);
+
+            date = p->Date();
 
             p->RemoveFromDb();
 
             removeItem(i);
             delete i;
         }
+
+        emit itemRemoved(date);
 
         event->accept();
     }
