@@ -1,7 +1,10 @@
 #include "DayGraphicsScene.h"
+#include "ProjectGraphicsItem.h"
 
 #include <QPainter>
 #include <QTime>
+#include <QGraphicsSceneContextMenuEvent>
+#include <QMenu>
 #include <QDebug>
 
 DayGraphicsScene::DayGraphicsScene(QObject *parent) :
@@ -39,6 +42,34 @@ QTime DayGraphicsScene::MapXCoordToTime(const double &x) const
     double secsFromStartOfDay = lambda * workDayInSecs;
 
     return startWorkDay.addSecs(secsFromStartOfDay);
+}
+
+void DayGraphicsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    QGraphicsItem *i = itemAt(event->scenePos());
+
+    if(i)
+    {
+        QMenu menu;
+
+        QAction *a = menu.addAction("Remove");
+
+        if(menu.exec(event->screenPos()) == a)
+        {
+            ProjectGraphicsItem *p = dynamic_cast<ProjectGraphicsItem*>(i);
+
+            p->RemoveFromDb();
+
+            removeItem(i);
+            delete i;
+        }
+
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 }
 
 void DayGraphicsScene::ItemModified()

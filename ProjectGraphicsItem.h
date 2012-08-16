@@ -25,6 +25,10 @@ public:
      */
     void UpdateDatabaseEntry();
 
+    /** Removes itself from the sqlite database.
+     */
+    void RemoveFromDb() const;
+
 private:
     QString originalProjectName;
     QDateTime originalStart;

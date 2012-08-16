@@ -226,3 +226,18 @@ void ProjectGraphicsItem::UpdateDatabaseEntry()
         originalEnd = end;
     }
 }
+
+void ProjectGraphicsItem::RemoveFromDb() const
+{
+    QString sql = "DELETE FROM Projects ";
+    sql += "WHERE Start='" + originalStart.toString(Qt::ISODate) + "' AND Name='" + originalProjectName + "' AND End='" + originalEnd.toString(Qt::ISODate) + "'";
+
+    QSqlQuery query(*db->Db());
+
+    bool query_ok = query.exec(sql);
+
+    if(!query_ok)
+    {
+        qDebug() << query.lastError().text();
+    }
+}

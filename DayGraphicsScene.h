@@ -15,6 +15,8 @@ public:
     double MapTimeToXCoord(const QDateTime &time) const;
     QTime MapXCoordToTime(const double &x) const;
 
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
     double minX;
     double maxX;
 
