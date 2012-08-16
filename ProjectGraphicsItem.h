@@ -4,10 +4,12 @@
 #include <QGraphicsItem>
 #include <QDateTime>
 
+class ProjectDatabase;
+
 class ProjectGraphicsItem : public QGraphicsItem
 {
 public:
-    explicit ProjectGraphicsItem(ProjectGraphicsItem *parent = 0);
+    explicit ProjectGraphicsItem(ProjectDatabase *db, ProjectGraphicsItem *parent = 0);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -18,7 +20,15 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
+    /** It's OK to call this function on any item. It only commits something to the database if there has been an actual change.
+     */
+    void UpdateDatabaseEntry();
+
 private:
+    QString originalProjectName;
+    QDateTime originalStart;
+    QDateTime originalEnd;
+
     QString projectName;
     QDateTime start;
     QDateTime end;
@@ -29,8 +39,11 @@ private:
     bool isLeftEdge;
     bool doMove;
     bool doStretch;
+    bool hasChanged;
 
     double originalXPos;
+
+    ProjectDatabase *db;
 
     void UpdateToolTip();
 };

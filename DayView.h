@@ -22,7 +22,11 @@ public:
     void SetProjectDatabase(ProjectDatabase *db);
 
 private slots:
+    void itemChanged();
+
     void on_dateEdit_selectDay_dateChanged(const QDate &date);
+
+    void on_toolButton_commitToDb_clicked();
 
 private:
     Ui::DayView *ui;

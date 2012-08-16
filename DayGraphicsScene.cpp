@@ -41,6 +41,11 @@ QTime DayGraphicsScene::MapXCoordToTime(const double &x) const
     return startWorkDay.addSecs(secsFromStartOfDay);
 }
 
+void DayGraphicsScene::ItemModified()
+{
+    emit itemChanged();
+}
+
 void DayGraphicsScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
     QPointF tl = rect.topLeft();

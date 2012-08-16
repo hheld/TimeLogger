@@ -21,6 +21,8 @@ DayView::DayView(QWidget *parent) :
     ui->dateEdit_selectDay->setDate(QDate::currentDate());
 
     ui->graphicsView->setScene(dayScene);
+
+    connect(dayScene, SIGNAL(itemChanged()), this, SLOT(itemChanged()));
 }
 
 DayView::~DayView()
@@ -31,6 +33,11 @@ DayView::~DayView()
 void DayView::SetProjectDatabase(ProjectDatabase *db)
 {
     this->db = db;
+}
+
+void DayView::itemChanged()
+{
+    ui->toolButton_commitToDb->setEnabled(true);
 }
 
 void DayView::on_dateEdit_selectDay_dateChanged(const QDate &date)
@@ -61,7 +68,7 @@ void DayView::on_dateEdit_selectDay_dateChanged(const QDate &date)
             QDateTime start = lcit->first;
             QDateTime end = lcit->second;
 
-            ProjectGraphicsItem *pgi = new ProjectGraphicsItem;
+            ProjectGraphicsItem *pgi = new ProjectGraphicsItem(db);
 
             pgi->SetProjectInfo(projectName, start, end, numOfProjects, index);
 
@@ -94,4 +101,18 @@ void DayView::paintEvent(QPaintEvent *)
         ui->dateEdit_selectDay->setDate(ui->dateEdit_selectDay->date());
         initialSettingOfDateInPaintEventDone = true;
     }
+}
+
+void DayView::on_toolButton_commitToDb_clicked()
+{
+    QList<QGraphicsItem*> allItems = dayScene->items();
+
+    foreach(QGraphicsItem *i, allItems)
+    {
+        ProjectGraphicsItem *p = dynamic_cast<ProjectGraphicsItem*>(i);
+
+        p->UpdateDatabaseEntry();
+    }
+
+    ui->toolButton_commitToDb->setEnabled(false);
 }

@@ -21,7 +21,10 @@ public:
     double minY;
     double maxY;
 
+    void ItemModified();
+
 signals:
+    void itemChanged();
 
 public slots:
 

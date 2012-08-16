@@ -29,6 +29,8 @@ public:
 
     static double RoundHours(const double &hours);
 
+    inline QSqlDatabase* Db() { return &db; }
+
 private:
     QSqlDatabase db;
     QString lastStartTime;

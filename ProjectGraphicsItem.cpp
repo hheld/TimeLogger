@@ -1,16 +1,21 @@
 #include "ProjectGraphicsItem.h"
 #include "DayGraphicsScene.h"
+#include "ProjectDatabase.h"
 
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
+#include <QSqlQuery>
+#include <QSqlError>
 #include <QDebug>
 
-ProjectGraphicsItem::ProjectGraphicsItem(ProjectGraphicsItem *parent) :
+ProjectGraphicsItem::ProjectGraphicsItem(ProjectDatabase *db, ProjectGraphicsItem *parent) :
     QGraphicsItem(parent),
     isLeftEdge(false),
     doMove(false),
     doStretch(false),
-    originalXPos(0.)
+    hasChanged(false),
+    originalXPos(0.),
+    db(db)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
 }
@@ -54,6 +59,10 @@ void ProjectGraphicsItem::SetProjectInfo(const QString &name, const QDateTime &s
     this->end = end;
     this->numOfProjectsThisDay = numOfProjectsThisDay;
     this->indexOfThisProject = indexOfThisProject;
+
+    originalProjectName = name;
+    originalStart = start;
+    originalEnd = end;
 }
 
 void ProjectGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -106,6 +115,9 @@ void ProjectGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
             start.setTime(newStartTime);
 
             UpdateToolTip();
+            hasChanged = true;
+
+            projectViewScene->ItemModified();
         }
         else
         {
@@ -120,6 +132,9 @@ void ProjectGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
             end.setTime(newEndTime);
 
             UpdateToolTip();
+            hasChanged = true;
+
+            projectViewScene->ItemModified();
         }
     }
     else if(doMove)
@@ -140,7 +155,11 @@ void ProjectGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         end.setTime(newEndTime);
 
         UpdateToolTip();
+        hasChanged = true;
+
         originalXPos += diff.x();
+
+        projectViewScene->ItemModified();
     }
 }
 
@@ -160,4 +179,29 @@ void ProjectGraphicsItem::UpdateToolTip()
             .arg(end.toString(Qt::SystemLocaleShortDate));
 
     setToolTip(toolTip);
+}
+
+void ProjectGraphicsItem::UpdateDatabaseEntry()
+{
+    if(hasChanged)
+    {
+        QString sql = "UPDATE Projects SET Start = '" + start.toString(Qt::ISODate) + "',";
+        sql += "End = '" + end.toString(Qt::ISODate) + "' ";
+        sql += "WHERE Start='" + originalStart.toString(Qt::ISODate) + "' AND Name='" + originalProjectName + "' AND End='" + originalEnd.toString(Qt::ISODate) + "'";
+
+        QSqlQuery query(*db->Db());
+
+        bool query_ok = query.exec(sql);
+
+        if(!query_ok)
+        {
+            qDebug() << query.lastError().text();
+        }
+
+        hasChanged = false;
+
+        originalProjectName = projectName;
+        originalStart = start;
+        originalEnd = end;
+    }
 }
