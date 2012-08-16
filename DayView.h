@@ -31,6 +31,8 @@ private:
     ProjectDatabase *db;
 
     void paintEvent(QPaintEvent *);
+
+    bool initialSettingOfDateInPaintEventDone;
 };
 
 #endif // DAYVIEW_H

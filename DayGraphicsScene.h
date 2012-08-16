@@ -13,6 +13,7 @@ public:
     explicit DayGraphicsScene(QObject *parent = 0);
 
     double MapTimeToXCoord(const QDateTime &time) const;
+    QTime MapXCoordToTime(const double &x) const;
 
     double minX;
     double maxX;

@@ -14,6 +14,10 @@ public:
 
     void SetProjectInfo(const QString &name, const QDateTime &start, const QDateTime &end, const int &numOfProjectsThisDay, const int &indexOfThisProject);
 
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
 private:
     QString projectName;
     QDateTime start;
@@ -21,6 +25,14 @@ private:
 
     int numOfProjectsThisDay;
     int indexOfThisProject;
+
+    bool isLeftEdge;
+    bool doMove;
+    bool doStretch;
+
+    double originalXPos;
+
+    void UpdateToolTip();
 };
 
 #endif // PROJECTGRAPHICSITEM_H

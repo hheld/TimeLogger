@@ -30,6 +30,17 @@ double DayGraphicsScene::MapTimeToXCoord(const QDateTime &time) const
     return xCoord;
 }
 
+QTime DayGraphicsScene::MapXCoordToTime(const double &x) const
+{
+    double lambda = (x - minX) / (maxX - minX);
+
+    double workDayInSecs = workingHoursPerDay*3600.;
+
+    double secsFromStartOfDay = lambda * workDayInSecs;
+
+    return startWorkDay.addSecs(secsFromStartOfDay);
+}
+
 void DayGraphicsScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
     QPointF tl = rect.topLeft();

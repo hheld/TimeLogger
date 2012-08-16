@@ -3,5 +3,5 @@
 DayGraphicsView::DayGraphicsView(QWidget *parent) :
     QGraphicsView(parent)
 {
-//    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 }
