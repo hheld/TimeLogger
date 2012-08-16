@@ -1,17 +1,22 @@
 #include "DayView.h"
 #include "ui_DayView.h"
 
+#include <QSqlQuery>
+#include <QSqlError>
 #include <QDebug>
 
 #include "DayGraphicsScene.h"
 #include "ProjectDatabase.h"
 #include "ProjectGraphicsItem.h"
+#include "DialogAddHours.h"
+#include "Project.h"
 
-DayView::DayView(QWidget *parent) :
+DayView::DayView(Project *root, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DayView),
     dayScene(0),
     db(0),
+    root(root),
     initialSettingOfDateInPaintEventDone(false)
 {
     ui->setupUi(this);
@@ -99,7 +104,7 @@ void DayView::paintEvent(QPaintEvent *)
 {
     if(!initialSettingOfDateInPaintEventDone)
     {
-        ui->dateEdit_selectDay->setDate(ui->dateEdit_selectDay->date());
+        on_dateEdit_selectDay_dateChanged(ui->dateEdit_selectDay->date());
         initialSettingOfDateInPaintEventDone = true;
     }
 }
@@ -116,4 +121,34 @@ void DayView::on_toolButton_commitToDb_clicked()
     }
 
     ui->toolButton_commitToDb->setEnabled(false);
+}
+
+void DayView::on_toolButton_addProject_clicked()
+{
+    DialogAddHours diag(this);
+
+    diag.SetListOfWorkableProjects(root->GetAllWorkableProjects());
+
+    if(diag.exec() == QDialog::Accepted)
+    {
+        QString projectName = diag.Name();
+        QTime start = diag.Start();
+        QTime end = diag.End();
+
+        QDateTime dtStart(ui->dateEdit_selectDay->date(), start);
+        QDateTime dtEnd(ui->dateEdit_selectDay->date(), end);
+
+        QString sql = "INSERT OR IGNORE INTO Projects (Name, Start, End) VALUES ('" + projectName + "', '" + dtStart.toString(Qt::ISODate) + "', '" + dtEnd.toString(Qt::ISODate) + "')";
+
+        QSqlQuery query(*db->Db());
+
+        bool query_ok = query.exec(sql);
+
+        if(!query_ok)
+        {
+            qDebug() << query.lastError().text();
+        }
+
+        on_dateEdit_selectDay_dateChanged(ui->dateEdit_selectDay->date());
+    }
 }

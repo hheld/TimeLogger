@@ -62,11 +62,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     report = new Report(pdb);
 
-    dayView = new DayView;
-    dayView->SetProjectDatabase(pdb);
-
     projectModel = new ProjectModel();
     ui->treeView_projects->setModel(projectModel);
+
+    dayView = new DayView(projectModel->Root());
+    dayView->SetProjectDatabase(pdb);
 
     lineEditDelegate = new LineEditDelegate(this);
     ui->treeView_projects->setItemDelegateForColumn(0, lineEditDelegate);

@@ -50,6 +50,8 @@ public:
 
     void MakeHoursConsistent();
 
+    QStringList GetAllWorkableProjects() const;
+
     static QString pathToProjectXML;
 
 private:

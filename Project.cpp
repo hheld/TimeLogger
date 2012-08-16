@@ -1,6 +1,7 @@
 #include "Project.h"
 
 #include <QDir>
+#include <QStringList>
 
 QString Project::pathToProjectXML = QDir::homePath() + "/.timelogger/projects.xml";
 
@@ -230,4 +231,24 @@ void Project::MakeHoursConsistent()
             workedHours += sp->workedHours;
         }
     }
+}
+
+QStringList Project::GetAllWorkableProjects() const
+{
+    QStringList allProjectNames;
+
+    const QVector<Project*> &sp = subProjects;
+
+    if(sp.isEmpty())
+    {
+        allProjectNames << DbName();
+        return allProjectNames;
+    }
+
+    foreach(Project *p, sp)
+    {
+        allProjectNames += p->GetAllWorkableProjects();
+    }
+
+    return allProjectNames;
 }
