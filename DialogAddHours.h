@@ -21,6 +21,8 @@ public:
     QTime End() const;
     QString Name() const;
 
+    void SetStart(const QTime &time);
+
 private:
     Ui::DialogAddHours *ui;
 };

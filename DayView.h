@@ -2,6 +2,7 @@
 #define DAYVIEW_H
 
 #include <QWidget>
+#include <QTime>
 
 namespace Ui {
 class DayView;
@@ -29,7 +30,7 @@ private slots:
 
     void on_toolButton_commitToDb_clicked();
 
-    void on_toolButton_addProject_clicked();
+    void toolButton_addProject_clicked(const QTime &time = QTime());
 
 private:
     Ui::DayView *ui;

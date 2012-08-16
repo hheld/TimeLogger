@@ -44,6 +44,26 @@ QTime DayGraphicsScene::MapXCoordToTime(const double &x) const
     return startWorkDay.addSecs(secsFromStartOfDay);
 }
 
+void DayGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem *i = itemAt(event->scenePos());
+
+    if(i)
+    {
+        event->ignore();
+    }
+    else
+    {
+        double xCoord = event->scenePos().x();
+
+        QTime time = MapXCoordToTime(xCoord);
+
+        emit doubleClickedOnBackground(time);
+
+        event->accept();
+    }
+}
+
 void DayGraphicsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     QGraphicsItem *i = itemAt(event->scenePos());

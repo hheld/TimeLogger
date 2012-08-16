@@ -15,6 +15,7 @@ public:
     double MapTimeToXCoord(const QDateTime &time) const;
     QTime MapXCoordToTime(const double &x) const;
 
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
     double minX;
@@ -28,6 +29,7 @@ public:
 signals:
     void itemChanged();
     void itemRemoved(const QDate &date);
+    void doubleClickedOnBackground(const QTime &time);
 
 public slots:
 

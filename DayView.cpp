@@ -29,6 +29,8 @@ DayView::DayView(Project *root, QWidget *parent) :
 
     connect(dayScene, SIGNAL(itemChanged()), this, SLOT(itemChanged()));
     connect(dayScene, SIGNAL(itemRemoved(QDate)), this, SLOT(on_dateEdit_selectDay_dateChanged(QDate)));
+    connect(dayScene, SIGNAL(doubleClickedOnBackground(QTime)), this, SLOT(toolButton_addProject_clicked(QTime)));
+    connect(ui->toolButton_addProject, SIGNAL(clicked()), this, SLOT(toolButton_addProject_clicked()));
 }
 
 DayView::~DayView()
@@ -123,9 +125,14 @@ void DayView::on_toolButton_commitToDb_clicked()
     ui->toolButton_commitToDb->setEnabled(false);
 }
 
-void DayView::on_toolButton_addProject_clicked()
+void DayView::toolButton_addProject_clicked(const QTime &time)
 {
     DialogAddHours diag(this);
+
+    if(!time.isNull())
+    {
+        diag.SetStart(time);
+    }
 
     diag.SetListOfWorkableProjects(root->GetAllWorkableProjects());
 

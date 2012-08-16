@@ -32,3 +32,9 @@ QString DialogAddHours::Name() const
 {
     return ui->comboBox_project->currentText();
 }
+
+void DialogAddHours::SetStart(const QTime &time)
+{
+    ui->timeEdit_start->setTime(time);
+    ui->timeEdit_end->setTime(time.addSecs(3600));
+}
