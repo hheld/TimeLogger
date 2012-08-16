@@ -4,7 +4,6 @@
 
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
-#include <QGraphicsSceneContextMenuEvent>
 #include <QCursor>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -174,11 +173,6 @@ void ProjectGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     doMove = false;
     doStretch = false;
-}
-
-void ProjectGraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
-{
-    qDebug() << event->pos();
 }
 
 void ProjectGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
