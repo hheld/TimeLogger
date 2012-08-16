@@ -66,11 +66,15 @@ void DayGraphicsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
             removeItem(i);
             delete i;
+
+            emit itemRemoved(date);
+
+            event->accept();
         }
-
-        emit itemRemoved(date);
-
-        event->accept();
+        else
+        {
+            event->ignore();
+        }
     }
     else
     {
