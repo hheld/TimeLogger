@@ -19,6 +19,8 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
 
     /** It's OK to call this function on any item. It only commits something to the database if there has been an actual change.
      */

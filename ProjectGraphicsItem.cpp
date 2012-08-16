@@ -4,6 +4,8 @@
 
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneContextMenuEvent>
+#include <QCursor>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
@@ -18,6 +20,7 @@ ProjectGraphicsItem::ProjectGraphicsItem(ProjectDatabase *db, ProjectGraphicsIte
     db(db)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
+    setAcceptsHoverEvents(true);
 }
 
 QRectF ProjectGraphicsItem::boundingRect() const
@@ -90,6 +93,8 @@ void ProjectGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
         doStretch = false;
         doMove = true;
+
+        setCursor(QCursor(Qt::ClosedHandCursor));
     }
 }
 
@@ -169,6 +174,28 @@ void ProjectGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     doMove = false;
     doStretch = false;
+}
+
+void ProjectGraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    qDebug() << event->pos();
+}
+
+void ProjectGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    QRectF br = boundingRect();
+    QPointF pos = event->pos();
+
+    if(qAbs(pos.x() - br.right()) < 5. || qAbs(pos.x() - br.left()) < 5.)
+    {
+        setCursor(QCursor(Qt::SizeHorCursor));
+    }
+    else
+    {
+        setCursor(QCursor(Qt::OpenHandCursor));
+    }
+
+    QGraphicsItem::hoverMoveEvent(event);
 }
 
 void ProjectGraphicsItem::UpdateToolTip()
