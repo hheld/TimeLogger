@@ -16,6 +16,7 @@
 #include "ProjectDatabase.h"
 #include "Report.h"
 #include "DayView.h"
+#include "DialogSettings.h"
 
 void MainWindow::SetupSystemTrayIcon()
 {
@@ -352,4 +353,24 @@ void MainWindow::askUserIfStillWorking()
 void MainWindow::on_actionDay_view_triggered()
 {
     dayView->show();
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+    DialogSettings diag(this);
+
+    diag.SetStartOfDay(startOfWorkingDay);
+    diag.SetNumOfWorkingHours(numOfWorkingHoursPerDay);
+    diag.SetHoursBeforeBudgetWarning(hoursBeforeEndOfBudgetWarning);
+    diag.SetIntervalsForReminder(intervalsOfRemindersInMinutes);
+
+    if(diag.exec() == QDialog::Accepted)
+    {
+        startOfWorkingDay = diag.GetStartOfDay();
+        numOfWorkingHoursPerDay = diag.GetNumOfWorkingHours();
+        hoursBeforeEndOfBudgetWarning = diag.GetHoursBeforeBudgetWarning();
+        intervalsOfRemindersInMinutes = diag.GetIntervalsForReminder();
+
+        WriteSettings();
+    }
 }

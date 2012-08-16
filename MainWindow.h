@@ -56,6 +56,8 @@ private slots:
 
     void on_actionDay_view_triggered();
 
+    void on_actionSettings_triggered();
+
 private:
     Ui::MainWindow *ui;
 

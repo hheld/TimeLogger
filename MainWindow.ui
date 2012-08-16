@@ -144,6 +144,7 @@
    </attribute>
    <addaction name="actionReport"/>
    <addaction name="actionDay_view"/>
+   <addaction name="actionSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionReport">
@@ -160,6 +161,14 @@
    </property>
    <property name="toolTip">
     <string>View worked hours on a particular day</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+   <property name="toolTip">
+    <string>Configure some general settings</string>
    </property>
   </action>
  </widget>

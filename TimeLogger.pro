@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     DayGraphicsView.cpp \
     DayGraphicsScene.cpp \
     ProjectGraphicsItem.cpp \
-    DialogAddHours.cpp
+    DialogAddHours.cpp \
+    DialogSettings.cpp
 
 HEADERS  += MainWindow.h \
     Project.h \
@@ -41,12 +42,14 @@ HEADERS  += MainWindow.h \
     DayGraphicsView.h \
     DayGraphicsScene.h \
     ProjectGraphicsItem.h \
-    DialogAddHours.h
+    DialogAddHours.h \
+    DialogSettings.h
 
 FORMS    += MainWindow.ui \
     Report.ui \
     DayView.ui \
-    DialogAddHours.ui
+    DialogAddHours.ui \
+    DialogSettings.ui
 
 RESOURCES += \
     resources.qrc
