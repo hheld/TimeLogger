@@ -18,7 +18,7 @@ class DayView : public QWidget
     Q_OBJECT
 
 public:
-    explicit DayView(Project *root, QWidget *parent = 0);
+    DayView(Project *root, QTime *startOfWorkDay, int *numOfWorkingHours, QWidget *parent = 0);
     ~DayView();
 
     void SetProjectDatabase(ProjectDatabase *db);
@@ -45,6 +45,9 @@ private:
     void paintEvent(QPaintEvent *);
 
     bool initialSettingOfDateInPaintEventDone;
+
+    QTime *startOfWorkDay;
+    int *numOfWorkingHours;
 };
 
 #endif // DAYVIEW_H

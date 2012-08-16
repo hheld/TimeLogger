@@ -50,7 +50,7 @@ bool XMLProjectsReader::Read() const
                 double plannedHours = attr.value("plannedHours").toString().toDouble();
                 double workedHours = attr.value("workedHours").toString().toDouble();
 
-                Project *newProject = new Project(projectName);
+                Project *newProject = new Project(root->PtrHoursBeforeEndOfBudget(), projectName);
                 newProject->TotalHours(totalHours);
                 newProject->PlannedHours(plannedHours);
                 newProject->WorkedHours(workedHours);

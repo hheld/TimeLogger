@@ -10,7 +10,7 @@ class Project
 public:
     enum State {InBudet, ApproachingEndOfBudget, ExceededBudget};
 
-    explicit Project(const QString &name, Project *parent = 0);
+    Project(int *hoursBeforeEndOfBudgetWarning, const QString &name, Project *parent = 0);
     ~Project();
 
     const QString& Name() const;
@@ -52,6 +52,8 @@ public:
 
     QStringList GetAllWorkableProjects() const;
 
+    int* PtrHoursBeforeEndOfBudget() const;
+
     static QString pathToProjectXML;
 
 private:
@@ -62,6 +64,8 @@ private:
     double totalBudgetHours;
     double myPlannedHours;
     double workedHours;
+
+    int *hoursBeforeEndOfBudgetWarning;
 };
 
 #endif // PROJECT_H

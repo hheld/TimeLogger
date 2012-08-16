@@ -11,17 +11,21 @@
 #include "DialogAddHours.h"
 #include "Project.h"
 
-DayView::DayView(Project *root, QWidget *parent) :
+DayView::DayView(Project *root, QTime *startOfWorkDay, int *numOfWorkingHours, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DayView),
     dayScene(0),
     db(0),
     root(root),
-    initialSettingOfDateInPaintEventDone(false)
+    initialSettingOfDateInPaintEventDone(false),
+    startOfWorkDay(startOfWorkDay),
+    numOfWorkingHours(numOfWorkingHours)
 {
     ui->setupUi(this);
 
     dayScene = new DayGraphicsScene(this);
+    dayScene->SetStartWorkDay(startOfWorkDay);
+    dayScene->SetWorkingHoursPerDay(numOfWorkingHours);
 
     ui->dateEdit_selectDay->setDate(QDate::currentDate());
 

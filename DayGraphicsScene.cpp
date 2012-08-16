@@ -13,8 +13,8 @@ DayGraphicsScene::DayGraphicsScene(QObject *parent) :
     maxX(0.),
     minY(0.),
     maxY(0.),
-    startWorkDay(9, 0, 0),
-    workingHoursPerDay(9.)
+    startWorkDay(0),
+    workingHoursPerDay(0)
 {
 }
 
@@ -22,9 +22,9 @@ double DayGraphicsScene::MapTimeToXCoord(const QDateTime &time) const
 {
     QTime t = time.time();
 
-    double secsFromStartOfDay = startWorkDay.secsTo(t);
+    double secsFromStartOfDay = startWorkDay->secsTo(t);
 
-    double workDayInSecs = workingHoursPerDay*3600.;
+    double workDayInSecs = *workingHoursPerDay*3600.;
 
     double lambda = secsFromStartOfDay / workDayInSecs;
 
@@ -37,11 +37,11 @@ QTime DayGraphicsScene::MapXCoordToTime(const double &x) const
 {
     double lambda = (x - minX) / (maxX - minX);
 
-    double workDayInSecs = workingHoursPerDay*3600.;
+    double workDayInSecs = *workingHoursPerDay*3600.;
 
     double secsFromStartOfDay = lambda * workDayInSecs;
 
-    return startWorkDay.addSecs(secsFromStartOfDay);
+    return startWorkDay->addSecs(secsFromStartOfDay);
 }
 
 void DayGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
@@ -107,6 +107,16 @@ void DayGraphicsScene::ItemModified()
     emit itemChanged();
 }
 
+void DayGraphicsScene::SetStartWorkDay(QTime *time)
+{
+    startWorkDay = time;
+}
+
+void DayGraphicsScene::SetWorkingHoursPerDay(int *hours)
+{
+    workingHoursPerDay = hours;
+}
+
 void DayGraphicsScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
     QPointF tl = rect.topLeft();
@@ -127,11 +137,11 @@ void DayGraphicsScene::drawBackground(QPainter *painter, const QRectF &rect)
 
     QVector<QLineF> verticalGridLines;
 
-    for(int l=0; l<workingHoursPerDay+1; ++l)
+    for(int l=0; l<*workingHoursPerDay+1; ++l)
     {
-        verticalGridLines.append(QLineF(tl + (0.1 + 0.8/workingHoursPerDay*l)*diff_x + 0.05*diff_y, tl + (0.1 + 0.8/workingHoursPerDay*l)*diff_x + 0.95*diff_y));
+        verticalGridLines.append(QLineF(tl + (0.1 + 0.8/(*workingHoursPerDay)*l)*diff_x + 0.05*diff_y, tl + (0.1 + 0.8/(*workingHoursPerDay)*l)*diff_x + 0.95*diff_y));
 
-        painter->drawText(QRectF(tl + (0.1 + 0.8/workingHoursPerDay*l - 0.4/workingHoursPerDay)*diff_x + 0.95*diff_y, tl + (0.1 + 0.8/workingHoursPerDay*l + 0.4/workingHoursPerDay)*diff_x + 1.*diff_y), startWorkDay.addSecs(l*3600).toString("HH:mm"), QTextOption(Qt::AlignHCenter));
+        painter->drawText(QRectF(tl + (0.1 + 0.8/(*workingHoursPerDay)*l - 0.4/(*workingHoursPerDay))*diff_x + 0.95*diff_y, tl + (0.1 + 0.8/(*workingHoursPerDay)*l + 0.4/(*workingHoursPerDay))*diff_x + 1.*diff_y), startWorkDay->addSecs(l*3600).toString("HH:mm"), QTextOption(Qt::AlignHCenter));
     }
 
     painter->drawLine(xAxis);

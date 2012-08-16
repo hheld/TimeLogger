@@ -3,9 +3,10 @@
 
 #include <QDebug>
 
-ProjectModel::ProjectModel(QObject *parent) :
+ProjectModel::ProjectModel(int *hoursBeforeEndOfBudgetWarning, QObject *parent) :
     QAbstractItemModel(parent),
-    root(new Project("root"))
+    root(new Project(hoursBeforeEndOfBudgetWarning, "root")),
+    hoursBeforeEndOfBudgetWarning(hoursBeforeEndOfBudgetWarning)
 {
     connect(this, SIGNAL(totalOrPlannedHoursEdited(QModelIndex)), this, SLOT(updateHoursOfAllParents(QModelIndex)));
 }
@@ -22,7 +23,7 @@ Project *ProjectModel::AddProject(const QString &name, Project *parent)
         parent = root;
     }
 
-    Project *newProject = new Project(name);
+    Project *newProject = new Project(hoursBeforeEndOfBudgetWarning, name);
 
     parent->AddSubProject(newProject);
 
@@ -252,7 +253,7 @@ bool ProjectModel::insertRow(int row, const QModelIndex &parent)
 
     beginInsertRows(parent, row, row);
 
-    Project *newProject = new Project(tr("Enter project title here"), parentProject);
+    Project *newProject = new Project(hoursBeforeEndOfBudgetWarning, tr("Enter project title here"), parentProject);
 
     AddProject(newProject);
 

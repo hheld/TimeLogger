@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QMenu>
 #include <QApplication>
+#include <QSettings>
 #include <QDebug>
 
 #include "Project.h"
@@ -41,7 +42,7 @@ void MainWindow::SetupSystemTrayIcon()
     // ask the user every 30 minutes if he/she is still working on the same project
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(askUserIfStillWorking()));
-    timer->start(1000*60*30);
+    timer->start(1000*60*intervalsOfRemindersInMinutes);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -54,7 +55,11 @@ MainWindow::MainWindow(QWidget *parent) :
     pdb(0),
     sysTrayIcon(0),
     systemTrayMenu(0),
-    trayAction_quit(0)
+    trayAction_quit(0),
+    numOfWorkingHoursPerDay(9),
+    startOfWorkingDay(QTime(9, 0, 0)),
+    hoursBeforeEndOfBudgetWarning(10),
+    intervalsOfRemindersInMinutes(30)
 {
     ui->setupUi(this);
 
@@ -63,10 +68,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     report = new Report(pdb);
 
-    projectModel = new ProjectModel();
+    projectModel = new ProjectModel(&hoursBeforeEndOfBudgetWarning);
     ui->treeView_projects->setModel(projectModel);
 
-    dayView = new DayView(projectModel->Root());
+    dayView = new DayView(projectModel->Root(), &startOfWorkingDay, &numOfWorkingHoursPerDay);
     dayView->SetProjectDatabase(pdb);
 
     lineEditDelegate = new LineEditDelegate(this);
@@ -100,6 +105,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // disable close button of window
     setWindowFlags(windowFlags() & ~Qt::WindowCloseButtonHint);
+
+    // read settings
+    ReadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -220,6 +228,26 @@ void MainWindow::closeEvent(QCloseEvent *)
     SaveProjectXMLFile();
 
     report->close();
+}
+
+void MainWindow::ReadSettings()
+{
+    QSettings settings("hheld", "TimeLogger");
+
+    numOfWorkingHoursPerDay = settings.value("numOfWorkingHoursPerDay", 9).toInt();
+    startOfWorkingDay = settings.value("startOfWorkingDay", QTime(9, 0, 0)).toTime();
+    hoursBeforeEndOfBudgetWarning = settings.value("hoursBeforeEndOfBudgetWarning", 10).toInt();
+    intervalsOfRemindersInMinutes = settings.value("intervalsOfRemindersInMinutes", 30).toInt();
+}
+
+void MainWindow::WriteSettings() const
+{
+    QSettings settings("hheld", "TimeLogger");
+
+    settings.setValue("numOfWorkingHoursPerDay", numOfWorkingHoursPerDay);
+    settings.setValue("startOfWorkingDay", startOfWorkingDay);
+    settings.setValue("hoursBeforeEndOfBudgetWarning", hoursBeforeEndOfBudgetWarning);
+    settings.setValue("intervalsOfRemindersInMinutes", intervalsOfRemindersInMinutes);
 }
 
 void MainWindow::on_toolButton_startWorking_clicked()

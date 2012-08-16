@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QModelIndex>
 #include <QSystemTrayIcon>
+#include <QTime>
 
 namespace Ui {
 class MainWindow;
@@ -74,12 +75,22 @@ private:
     QMenu *systemTrayMenu;
     QAction *trayAction_quit;
 
+    // settings
+    int numOfWorkingHoursPerDay;
+    QTime startOfWorkingDay;
+    int hoursBeforeEndOfBudgetWarning;
+    int intervalsOfRemindersInMinutes;
+
+    // private member functions
     void initSettingsFolder() const;
 
     void OpenProjectXMLFile();
     void SetupSystemTrayIcon();
 
     void closeEvent(QCloseEvent *);
+
+    void ReadSettings();
+    void WriteSettings() const;
 };
 
 #endif // MAINWINDOW_H

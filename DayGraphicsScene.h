@@ -26,6 +26,9 @@ public:
 
     void ItemModified();
 
+    void SetStartWorkDay(QTime *time);
+    void SetWorkingHoursPerDay(int *hours);
+
 signals:
     void itemChanged();
     void itemRemoved(const QDate &date);
@@ -36,8 +39,8 @@ public slots:
 private:
     void drawBackground(QPainter *painter, const QRectF &rect);
 
-    QTime startWorkDay;
-    double workingHoursPerDay;
+    QTime *startWorkDay;
+    int *workingHoursPerDay;
 };
 
 #endif // DAYGRAPHICSSCENE_H

@@ -10,7 +10,7 @@ class ProjectModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit ProjectModel(QObject *parent = 0);
+    explicit ProjectModel(int *hoursBeforeEndOfBudgetWarning, QObject *parent = 0);
     ~ProjectModel();
 
     Project* AddProject(const QString &name, Project *parent = 0);
@@ -38,6 +38,8 @@ public slots:
 
 private:
     Project *root;
+
+    int *hoursBeforeEndOfBudgetWarning;
 
     void AddProject(Project *p);
     void RemoveProject(Project *p);

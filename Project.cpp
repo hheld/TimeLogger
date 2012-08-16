@@ -5,12 +5,13 @@
 
 QString Project::pathToProjectXML = QDir::homePath() + "/.timelogger/projects.xml";
 
-Project::Project(const QString &name, Project *parent) :
+Project::Project(int *hoursBeforeEndOfBudgetWarning, const QString &name, Project *parent) :
     name(name),
     parent(parent),
     totalBudgetHours(0.),
     myPlannedHours(0.),
-    workedHours(0.)
+    workedHours(0.),
+    hoursBeforeEndOfBudgetWarning(hoursBeforeEndOfBudgetWarning)
 {
 }
 
@@ -195,11 +196,11 @@ bool Project::CheckConsistency() const
 
 Project::State Project::GetState() const
 {
-    if(workedHours < myPlannedHours - 10.)
+    if(workedHours < myPlannedHours - *hoursBeforeEndOfBudgetWarning)
     {
         return InBudet;
     }
-    else if(workedHours >= myPlannedHours - 10. && workedHours <= myPlannedHours)
+    else if(workedHours >= myPlannedHours - *hoursBeforeEndOfBudgetWarning && workedHours <= myPlannedHours)
     {
         return ApproachingEndOfBudget;
     }
@@ -251,4 +252,9 @@ QStringList Project::GetAllWorkableProjects() const
     }
 
     return allProjectNames;
+}
+
+int *Project::PtrHoursBeforeEndOfBudget() const
+{
+    return hoursBeforeEndOfBudgetWarning;
 }
