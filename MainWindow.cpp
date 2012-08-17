@@ -21,11 +21,15 @@
 
 void MainWindow::EnableReminderTimer()
 {
-    delete timer;
+    // reminders are disabled if the user chooses the spin box's special value, i.e., 0
+    if(intervalsOfRemindersInMinutes>0)
+    {
+        delete timer;
 
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(askUserIfStillWorking()));
-    timer->start(1000*60*intervalsOfRemindersInMinutes);
+        timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(askUserIfStillWorking()));
+        timer->start(1000*60*intervalsOfRemindersInMinutes);
+    }
 }
 
 void MainWindow::SetupSystemTrayIcon()
