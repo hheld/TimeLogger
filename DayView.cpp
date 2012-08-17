@@ -139,7 +139,7 @@ void DayView::toolButton_addProject_clicked(const QTime &time)
         diag.SetStart(time);
     }
 
-    QStringList listOfWorkableProjects = root->GetAllWorkableProjects();
+    QStringList listOfWorkableProjects = root->GetAllWorkableProjectNames();
 
     if(listOfWorkableProjects.isEmpty())
     {

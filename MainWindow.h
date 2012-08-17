@@ -58,6 +58,8 @@ private slots:
 
     void on_actionSettings_triggered();
 
+    void on_actionWorked_hours_from_DB_triggered();
+
 private:
     Ui::MainWindow *ui;
 

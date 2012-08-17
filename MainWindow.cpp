@@ -6,6 +6,7 @@
 #include <QMenu>
 #include <QApplication>
 #include <QSettings>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "Project.h"
@@ -372,5 +373,25 @@ void MainWindow::on_actionSettings_triggered()
         intervalsOfRemindersInMinutes = diag.GetIntervalsForReminder();
 
         WriteSettings();
+    }
+}
+
+void MainWindow::on_actionWorked_hours_from_DB_triggered()
+{
+    if(QMessageBox::Yes == QMessageBox::warning(this, tr("Are you sure?"), tr("You are about to lose your manually entered worked hours and replace them by those actually tracked by this application. Are you sure that you want to do that?"), QMessageBox::Yes, QMessageBox::No))
+    {
+        QList<Project*> allWorkableProjects = projectModel->Root()->GetAllWorkableProjects();
+
+        foreach(Project *p, allWorkableProjects)
+        {
+            QString name = p->DbName();
+            double workedHours = pdb->GetTotalWorkedHours(name);
+
+            p->WorkedHours(workedHours);
+        }
+
+        projectModel->Root()->MakeHoursConsistent();
+
+        ui->treeView_projects->update();
     }
 }

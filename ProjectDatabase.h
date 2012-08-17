@@ -31,6 +31,8 @@ public:
 
     inline QSqlDatabase* Db() { return &db; }
 
+    double GetTotalWorkedHours(const QString &projectName) const;
+
 private:
     QSqlDatabase db;
     QString lastStartTime;

@@ -50,7 +50,8 @@ public:
 
     void MakeHoursConsistent();
 
-    QStringList GetAllWorkableProjects() const;
+    QStringList GetAllWorkableProjectNames() const;
+    QList<Project *> GetAllWorkableProjects();
 
     int* PtrHoursBeforeEndOfBudget() const;
 

@@ -240,3 +240,33 @@ double ProjectDatabase::RoundHours(const double &hours)
 
     return static_cast<double>(trunc / 10.);
 }
+
+double ProjectDatabase::GetTotalWorkedHours(const QString &projectName) const
+{
+    QString sql;
+
+    sql  = "SELECT Start, End FROM Projects ";
+    sql += "WHERE name='" + projectName + "' ";
+    sql += "ORDER BY name";
+
+    QSqlQuery query(db);
+
+    bool query_ok = query.exec(sql);
+
+    if(!query_ok)
+    {
+        qDebug() << query.lastError().text();
+    }
+
+    double workedHours = 0.;
+
+    while(query.next())
+    {
+        QDateTime projectStart = query.value(0).toDateTime();
+        QDateTime projectEnd = query.value(1).toDateTime();
+
+        workedHours += projectStart.secsTo(projectEnd) / 3600.;
+    }
+
+    return workedHours;
+}

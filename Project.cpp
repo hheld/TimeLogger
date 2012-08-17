@@ -234,7 +234,7 @@ void Project::MakeHoursConsistent()
     }
 }
 
-QStringList Project::GetAllWorkableProjects() const
+QStringList Project::GetAllWorkableProjectNames() const
 {
     QStringList allProjectNames;
 
@@ -248,10 +248,30 @@ QStringList Project::GetAllWorkableProjects() const
 
     foreach(Project *p, sp)
     {
-        allProjectNames += p->GetAllWorkableProjects();
+        allProjectNames += p->GetAllWorkableProjectNames();
     }
 
     return allProjectNames;
+}
+
+QList<Project *> Project::GetAllWorkableProjects()
+{
+    QList<Project*> allProjects;
+
+    const QVector<Project*> &sp = subProjects;
+
+    if(sp.isEmpty() && name!="root")
+    {
+        allProjects.append(this);
+        return allProjects;
+    }
+
+    foreach(Project *p, sp)
+    {
+        allProjects += p->GetAllWorkableProjects();
+    }
+
+    return allProjects;
 }
 
 int *Project::PtrHoursBeforeEndOfBudget() const

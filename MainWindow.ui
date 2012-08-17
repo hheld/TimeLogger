@@ -145,6 +145,8 @@
    <addaction name="actionReport"/>
    <addaction name="actionDay_view"/>
    <addaction name="actionSettings"/>
+   <addaction name="separator"/>
+   <addaction name="actionWorked_hours_from_DB"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionReport">
@@ -169,6 +171,14 @@
    </property>
    <property name="toolTip">
     <string>Configure some general settings</string>
+   </property>
+  </action>
+  <action name="actionWorked_hours_from_DB">
+   <property name="text">
+    <string>Worked hours from DB</string>
+   </property>
+   <property name="toolTip">
+    <string>Get the actually tracked hours from the database</string>
    </property>
   </action>
  </widget>
