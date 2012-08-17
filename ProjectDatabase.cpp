@@ -156,7 +156,7 @@ QMap<QString, QList<QPair<QDateTime, QDateTime> > > ProjectDatabase::GetProjectD
     QString sql;
 
     sql  = "SELECT name, Start, End FROM Projects ";
-    sql += "WHERE Start >= '" + day.toString(Qt::ISODate) + "' AND End < '" + day.addDays(1).toString(Qt::ISODate) + "' ";
+    sql += "WHERE Start >= '" + day.toString(Qt::ISODate) + "' AND (End < '" + day.addDays(1).toString(Qt::ISODate) + "' OR End IS NULL)";
     sql += "ORDER BY name";
 
     QSqlQuery query(db);
@@ -173,6 +173,11 @@ QMap<QString, QList<QPair<QDateTime, QDateTime> > > ProjectDatabase::GetProjectD
         QString projectName = query.value(0).toString();
         QDateTime projectStart = query.value(1).toDateTime();
         QDateTime projectEnd = query.value(2).toDateTime();
+
+        if(projectEnd.isNull())
+        {
+            projectEnd = QDateTime::currentDateTime();
+        }
 
         QList<QPair<QDateTime, QDateTime > > &listOfDetails = projects2Details[projectName];
 
