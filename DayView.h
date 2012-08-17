@@ -32,6 +32,8 @@ private slots:
 
     void toolButton_addProject_clicked(const QTime &time = QTime());
 
+    void on_toolButton_ResetChanges_clicked();
+
 private:
     Ui::DayView *ui;
 

@@ -51,6 +51,7 @@ void DayView::SetProjectDatabase(ProjectDatabase *db)
 void DayView::itemChanged()
 {
     ui->toolButton_commitToDb->setEnabled(true);
+    ui->toolButton_ResetChanges->setEnabled(true);
 }
 
 void DayView::on_dateEdit_selectDay_dateChanged(const QDate &date)
@@ -128,6 +129,7 @@ void DayView::on_toolButton_commitToDb_clicked()
     }
 
     ui->toolButton_commitToDb->setEnabled(false);
+    ui->toolButton_ResetChanges->setEnabled(false);
 }
 
 void DayView::toolButton_addProject_clicked(const QTime &time)
@@ -172,4 +174,12 @@ void DayView::toolButton_addProject_clicked(const QTime &time)
 
         on_dateEdit_selectDay_dateChanged(ui->dateEdit_selectDay->date());
     }
+}
+
+void DayView::on_toolButton_ResetChanges_clicked()
+{
+    on_dateEdit_selectDay_dateChanged(ui->dateEdit_selectDay->date());
+
+    ui->toolButton_commitToDb->setEnabled(false);
+    ui->toolButton_ResetChanges->setEnabled(false);
 }
