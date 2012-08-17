@@ -19,6 +19,15 @@
 #include "DayView.h"
 #include "DialogSettings.h"
 
+void MainWindow::EnableReminderTimer()
+{
+    delete timer;
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(askUserIfStillWorking()));
+    timer->start(1000*60*intervalsOfRemindersInMinutes);
+}
+
 void MainWindow::SetupSystemTrayIcon()
 {
     sysTrayIcon->setIcon(QIcon(":/icons/Resources/AppIcon.svg"));
@@ -40,11 +49,6 @@ void MainWindow::SetupSystemTrayIcon()
 
     sysTrayIcon->setContextMenu(systemTrayMenu);
     sysTrayIcon->setToolTip(tr("TimeLogger"));
-
-    // ask the user every 30 minutes if he/she is still working on the same project
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(askUserIfStillWorking()));
-    timer->start(1000*60*intervalsOfRemindersInMinutes);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -61,7 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     numOfWorkingHoursPerDay(9),
     startOfWorkingDay(QTime(9, 0, 0)),
     hoursBeforeEndOfBudgetWarning(10),
-    intervalsOfRemindersInMinutes(30)
+    intervalsOfRemindersInMinutes(30),
+    timer(0)
 {
     ui->setupUi(this);
 
@@ -110,6 +115,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // read settings
     ReadSettings();
+
+    EnableReminderTimer();
 }
 
 MainWindow::~MainWindow()
@@ -373,6 +380,8 @@ void MainWindow::on_actionSettings_triggered()
         intervalsOfRemindersInMinutes = diag.GetIntervalsForReminder();
 
         WriteSettings();
+
+        EnableReminderTimer();
     }
 }
 

@@ -19,6 +19,7 @@ class Report;
 class QMenu;
 class QAction;
 class DayView;
+class QTimer;
 
 class MainWindow : public QMainWindow
 {
@@ -85,6 +86,8 @@ private:
     int hoursBeforeEndOfBudgetWarning;
     int intervalsOfRemindersInMinutes;
 
+    QTimer *timer;
+
     // private member functions
     void initSettingsFolder() const;
 
@@ -95,6 +98,8 @@ private:
 
     void ReadSettings();
     void WriteSettings() const;
+
+    void EnableReminderTimer();
 };
 
 #endif // MAINWINDOW_H
