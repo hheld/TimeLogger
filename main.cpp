@@ -12,6 +12,8 @@ void signalHandler(int signal);
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setQuitOnLastWindowClosed(false);
+
     MainWindow w;
     mw = &w;
     w.show();
