@@ -3,6 +3,7 @@
 
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "DayGraphicsScene.h"
@@ -138,7 +139,16 @@ void DayView::toolButton_addProject_clicked(const QTime &time)
         diag.SetStart(time);
     }
 
-    diag.SetListOfWorkableProjects(root->GetAllWorkableProjects());
+    QStringList listOfWorkableProjects = root->GetAllWorkableProjects();
+
+    if(listOfWorkableProjects.isEmpty())
+    {
+        QMessageBox::information(this, tr("Setup projects"), tr("To manually add worked hours, you need to define workable projects in the main window first."));
+
+        return;
+    }
+
+    diag.SetListOfWorkableProjects(listOfWorkableProjects);
 
     if(diag.exec() == QDialog::Accepted)
     {

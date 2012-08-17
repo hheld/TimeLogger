@@ -21,6 +21,8 @@ ProjectDatabase::ProjectDatabase()
         qDebug() << "Could not open the sqlite3 database '" << pathToDb << "'.";
         return;
     }
+
+    AddProjectTable();
 }
 
 ProjectDatabase::~ProjectDatabase()
@@ -30,8 +32,6 @@ ProjectDatabase::~ProjectDatabase()
 
 void ProjectDatabase::LogWorkingStart(Project *p, const QDateTime &start)
 {
-    AddProjectTable();
-
     QString startAsString = start.toString(Qt::ISODate);
 
     QString sql = "INSERT INTO Projects (Name, Start) VALUES ('" + p->DbName() + "', '" + startAsString + "')";
@@ -51,8 +51,6 @@ void ProjectDatabase::LogWorkingStart(Project *p, const QDateTime &start)
 
 void ProjectDatabase::LogWorkingEnd(Project *p, const QDateTime &end)
 {
-    AddProjectTable();
-
     QString startAsString = end.toString(Qt::ISODate);
 
     QString sql = "UPDATE Projects SET End = '" + startAsString + "' WHERE Start='" + lastStartTime + "' AND Name='" + p->DbName() + "'";

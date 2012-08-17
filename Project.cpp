@@ -240,7 +240,7 @@ QStringList Project::GetAllWorkableProjects() const
 
     const QVector<Project*> &sp = subProjects;
 
-    if(sp.isEmpty())
+    if(sp.isEmpty() && name!="root")
     {
         allProjectNames << DbName();
         return allProjectNames;
