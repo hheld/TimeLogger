@@ -274,6 +274,8 @@ void MainWindow::on_toolButton_startWorking_clicked()
         return;
     }
 
+    ui->actionWorked_hours_from_DB->setEnabled(false);
+
     isCurrentlyWorking = true;
 
     ui->toolButton_startWorking->setEnabled(false);
@@ -304,6 +306,8 @@ void MainWindow::on_toolButton_stopWorking_clicked()
     ui->statusBar->clearMessage();
 
     emit stoppedWorking();
+
+    ui->actionWorked_hours_from_DB->setEnabled(true);
 }
 
 void MainWindow::addSecondToCurrentProject()
