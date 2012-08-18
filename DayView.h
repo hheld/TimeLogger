@@ -23,6 +23,10 @@ public:
 
     void SetProjectDatabase(ProjectDatabase *db);
 
+    /** If true is given here, no edits are possible.
+     */
+    void ViewOnly(bool viewOnly);
+
 private slots:
     void itemChanged();
 

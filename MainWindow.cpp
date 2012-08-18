@@ -287,6 +287,8 @@ void MainWindow::on_toolButton_startWorking_clicked()
     connect(timer, SIGNAL(timeout()), this, SLOT(addSecondToCurrentProject()));
     connect(this, SIGNAL(stoppedWorking()), timer, SLOT(stop()));
     timer->start(1000);
+
+    dayView->hide();
 }
 
 void MainWindow::on_toolButton_stopWorking_clicked()
@@ -368,6 +370,15 @@ void MainWindow::askUserIfStillWorking()
 
 void MainWindow::on_actionDay_view_triggered()
 {
+    if(isCurrentlyWorking)
+    {
+        dayView->ViewOnly(true);
+    }
+    else
+    {
+        dayView->ViewOnly(false);
+    }
+
     dayView->show();
 }
 

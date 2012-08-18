@@ -48,6 +48,11 @@ void DayView::SetProjectDatabase(ProjectDatabase *db)
     this->db = db;
 }
 
+void DayView::ViewOnly(bool viewOnly)
+{
+    ui->graphicsView->setInteractive(!viewOnly);
+}
+
 void DayView::itemChanged()
 {
     ui->toolButton_commitToDb->setEnabled(true);
