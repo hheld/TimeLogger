@@ -177,6 +177,9 @@ void DayView::toolButton_addProject_clicked(const QTime &time)
             qDebug() << query.lastError().text();
         }
 
+        // without this, already made changes are reset by the next function call, so we should automatically commit all changes to the DB - most likely, this is what the user expects anyway
+        on_toolButton_commitToDb_clicked();
+
         on_dateEdit_selectDay_dateChanged(ui->dateEdit_selectDay->date());
     }
 }
