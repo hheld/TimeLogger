@@ -34,7 +34,7 @@ void Report::GetMapProjectName2RowIndex(QMap<QString, int> &projectName2RowIndex
         {
             if(!projectName2RowIndex.contains(innerList_cit->first))
             {
-                projectName2RowIndex[innerList_cit->first] = projectName2RowIndex.size()-1;
+                projectName2RowIndex[innerList_cit->first] = projectName2RowIndex.size();
             }
 
             ++innerList_cit;
