@@ -115,7 +115,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(sysTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(systemTrayIconClicked(QSystemTrayIcon::ActivationReason)));
 
     // disable close button of window
-    setWindowFlags(windowFlags() & ~Qt::WindowCloseButtonHint);
+    setWindowFlags((windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint);
 
     // read settings
     ReadSettings();

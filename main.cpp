@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
 
     //configure app's reaction to OS signals
     signal(SIGINT, signalHandler);
-    signal(SIGKILL, signalHandler);
-    signal(SIGQUIT, signalHandler);
-    signal(SIGSTOP, signalHandler);
+//    signal(SIGKILL, signalHandler);
+//    signal(SIGQUIT, signalHandler);
+//    signal(SIGSTOP, signalHandler);
     signal(SIGTERM, signalHandler);
     signal(SIGSEGV, signalHandler);
 
@@ -34,9 +34,9 @@ void signalHandler(int signal)
     switch(signal)
     {
     case SIGINT: printf("Received signal SIGINT: "); break;
-    case SIGKILL: printf("Received signal SIGKILL: "); break;
-    case SIGQUIT: printf("Received signal SIGQUIT: "); break;
-    case SIGSTOP: printf("Received signal SIGSTOP: "); break;
+//    case SIGKILL: printf("Received signal SIGKILL: "); break;
+//    case SIGQUIT: printf("Received signal SIGQUIT: "); break;
+//    case SIGSTOP: printf("Received signal SIGSTOP: "); break;
     case SIGTERM: printf("Received signal SIGTERM: "); break;
     case SIGSEGV: printf("Received signal SIGSEGV: "); break;
     }
